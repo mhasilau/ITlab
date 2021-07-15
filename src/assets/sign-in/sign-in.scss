@@ -11,11 +11,19 @@
     width: 60%;
     border: 2px solid #fff;
     border-radius: 20px;
-    padding: 100px 50px;
+    padding: 70px 50px;
 
-    .form-control {
-      height: 50px;
-      border-radius: 20px;
+    .naming {
+      text-align: center;
+      font-size: 50px;
+      margin-bottom: 10px;
+      #white {
+        color: white;
+      }
+
+      #black {
+        color: black;
+      }
     }
   }
 }
