@@ -5,27 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Sign In</title>
+    <title>Sign Up</title>
   </head>
   <body>
     <div class="header">
-      <a href="sign-up.html">Register</a>
+      <a href="sign-in.html">Login</a>
     </div>
     <div class="mainIn_content">
-      <p>Login</p>
+      <p>Create Account</p>
       <form class="mainIn_content_form">
         <div class="naming">
-          <span id="white">Green</span><span id="black">Pages</span>
+          <span id="colorStart">Gray</span><span id="colorEnd">Pages</span>
         </div>
         <div class="mb-3">
-          <input type="email" class="form-control" id="email" placeholder="Email">
+          <input type="text" class="form-control" id="username" placeholder="Enter Username">
         </div>
         <div class="mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Password">
+          <input type="email" class="form-control" id="email" placeholder="Enter Email">
         </div>
-        <button type="button" class="btn btn-primary">Sign in</button>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Enter Password">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="subminBtn">Sign in</button>
         <div class="image">
-          <img src="../pictures/live.png" alt="">
+          <img src="../../assets/pictures/logo.png" alt="">
         </div>
       </form>
     </div>

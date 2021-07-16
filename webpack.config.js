@@ -10,15 +10,18 @@ module.exports = {
   plugins: [
       new HTMLWebpackPlugin({
           filename: 'index.html',
-          template: './src/index.html'
+          template: './src/index.html',
+          favicon: './src/assets/pictures/favico.png'
       }),
       new HTMLWebpackPlugin({
           filename: 'sign-in.html',
-          template: './src/assets/sign-in/sign-in.html'
+          template: './src/components/sign-in/sign-in.html',
+          favicon: './src/assets/pictures/favico.png'
       }),
       new HTMLWebpackPlugin({
           filename: 'sign-up.html',
-          template: './src/assets/sign-up/sign-up.html'
+          template: './src/components/sign-up/sign-up.html',
+          favicon: './src/assets/pictures/favico.png'
       })
   ],
   module: {
@@ -40,7 +43,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        use: 'file-loader'
+        type: 'asset'
       }
     ]
   },
