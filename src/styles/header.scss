@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  height: 50px;
+  padding: 40px;
+  font-size: 15px;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}

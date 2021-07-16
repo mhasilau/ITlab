@@ -1,0 +1,44 @@
+.mainIn_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-size: 30px;
+    color: #fff;
+  }
+  &_form {
+    width: 50%;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding: 40px 40px;
+    align-items: center;
+
+
+    .image {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      position: relative;
+      top: -20px;
+      background-color: initial;
+
+      img {
+        width: 25%;
+      }
+    }
+
+    .naming {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 10px;
+      #colorStart {
+        color: #494949;
+      }
+
+      #colorEnd {
+        color: #973c15;
+      }
+    }
+  }
+}
