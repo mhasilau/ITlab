@@ -1,16 +1,22 @@
 import { signUp } from "../../api/api-handlers";
 import { setUserEmail } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
-// import { passwordPower } from '../../shared/validators';
+import { passwordPower } from '../../shared/validators';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
 
+const signUpForm = document.querySelector('.main_content_form');
+const userNickname = document.getElementById('username');
+const userEmail = document.getElementById('email');
+const userPassword = document.getElementById('password');
+const userConfirmPassword = document.getElementById('confirmPassword');
+
+
+
 export const showHidePasswordUp = () => {
   const password = document.querySelector('.textPassword');
   const confirm = document.querySelector('.textConfirm');
-  const userPassword = document.getElementById('password');
-  const userConfirmPassword = document.getElementById('confirmPassword');
 
   password.onclick = () => {
     if (userPassword.type == 'password') {
@@ -28,11 +34,8 @@ export const showHidePasswordUp = () => {
 
 
 export const signUpHandler = () => {
-  const signUpForm = document.querySelector('.main_content_form');
-  const userNickname = document.getElementById('username');
-  const userEmail = document.getElementById('email');
-  const userPassword = document.getElementById('password');
-  const userConfirmPassword = document.getElementById('confirmPassword');
+
+
 
   signUpForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -49,7 +52,7 @@ export const signUpHandler = () => {
   });
 }
 
-export const showMessageBoard = () => {
+export const showMessageBoardUp = () => {
   const usernameTip = document.getElementById('usernameTip');
   const emailTip = document.getElementById('emailTip');
   const passwordTip = document.getElementById('passwordTip');

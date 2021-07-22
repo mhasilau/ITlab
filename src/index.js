@@ -1,6 +1,6 @@
 import { routes, paths } from './shared/constants/routes';
-import { signInHandler,showHidePasswordIn } from './components/sign-in/sign-in';
-import { signUpHandler, showHidePasswordUp, showMessageBoard } from './components/sign-up/sign-up';
+import { signInHandler,showHidePasswordIn, showMessageBoardIn } from './components/sign-in/sign-in';
+import { signUpHandler, showHidePasswordUp, showMessageBoardUp } from './components/sign-up/sign-up';
 import { getToken } from './shared/local-storage/ls-config';
 
 import './styles/style.scss';
@@ -19,11 +19,12 @@ window.onload = () => {
     case paths.sign_in:
       signInHandler();
       showHidePasswordIn();
+      showMessageBoardIn();
       break;
     case paths.sign_up:
       signUpHandler();
       showHidePasswordUp();
-      showMessageBoard();
+      showMessageBoardUp();
       break;
     default:
       break;
