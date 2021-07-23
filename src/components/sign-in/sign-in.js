@@ -6,6 +6,7 @@ import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
 import { setToken } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
+import { passwordPower } from '../../shared/validators';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
@@ -35,7 +36,6 @@ export const signInHandler = () => {
       if (response) {
         const { idToken: token } = response.data;
         setToken(token);
-        console.log('hello');
         const redirect = () =>  window.location.href = routes.home;
         setTimeout(redirect, 3000);
       }
@@ -62,5 +62,4 @@ export const showMessageBoardIn = () => {
     const block = () => messageBlock.style.display = 'none';
     setTimeout(block, 3000)
   }
-
 }

@@ -17,15 +17,73 @@ const userPasswordUpperCheck = password => userPasswordUpperCaseValid.test(passw
 const userPasswordNumbersCheck = password => userPasswordNumbersValid.test(password);
 const userPasswordMinSymbolsCheck = password => userPasswordMinSymbolsValid.test(password);
 
+const userNickname = document.getElementById('username');
+const userEmail = document.getElementById('email');
+const userPassword = document.getElementById('password');
+const userConfirmPassword = document.getElementById('confirmPassword');
+
+const lowerCaseCheck = password => {
+  const result = userPasswordLowerCaseValid.test(password);
+  return result;
+}
+
+const upperCaseCheck = password => {
+  const result = userPasswordUpperCaseValid.test(password);
+  return result;
+}
+
+const numberCheck = password => {
+  const result = userPasswordNumbersValid.test(password);
+  return result;
+}
+
+const lengthCheck = password => {
+  const result = userPasswordLengthValid.test(password);
+  return result;
+}
+
+const symbolsCheck = password => {
+  const result = userPasswordMinSymbolsValid.test(password);
+  return result;
+}
+
+export const nameValidator = userName => userNameCheck(userName);
+
+export const emailValidator = email => userEmailCheck(email);
+
 export const passwordPower = password => {
 
-  let passwordStrength;
-
-  const passwordStrengthNum =  serPasswordLengthCheck(password) +
-    userPasswordLowerCheck(password) +
-    userPasswordUpperCheck(password) +
-    userPasswordNumbersCheck(password) +
-    userPasswordMinSymbolsCheck(password)
+  const passwordStrengthNum = lengthCheck(password) +
+    lowerCaseCheck(password) +
+    upperCaseCheck(password) +
+    numberCheck(password) +
+    symbolsCheck(password)
 
     console.log(passwordStrengthNum);
+
+    switch (passwordStrengthNum) {
+      case 1:
+        userPassword.classList.add('red');
+        userPassword.classList.remove('orange');
+        break;
+      case 2:
+        userPassword.classList.add('orange');
+        userPassword.classList.remove('yellow');
+        break;
+      case 3:
+        userPassword.classList.add('yellow');
+        userPassword.classList.remove('blue');
+        break;
+      case 4:
+        userPassword.classList.add('blue');
+        userPassword.classList.remove('green');
+        break;
+      case 5:
+        userPassword.classList.add('green');
+        break;
+      default:
+        userPassword.classList.remove('red');
+        break;
+    }
+    return passwordStrengthNum === 5;
 }
