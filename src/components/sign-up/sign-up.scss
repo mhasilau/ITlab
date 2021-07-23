@@ -7,6 +7,7 @@
     font-size: 30px;
     color: #fff;
   }
+
   &_form {
     width: 50%;
     border: 2px solid #fff;
@@ -21,19 +22,22 @@
     &.red {
       color: red;
     }
+
     &.orange {
       color: orange;
     }
+
     &.yellow {
       color: yellow;
     }
+
     &.blue {
       color: blue;
     }
+
     &.green {
       color: green;
     }
-
 
     .image {
       display: flex;
@@ -52,6 +56,7 @@
       text-align: center;
       font-size: 40px;
       margin-bottom: 10px;
+
       #colorStart {
         color: #494949;
       }

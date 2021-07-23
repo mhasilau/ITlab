@@ -15,18 +15,16 @@ export const showHidePasswordIn = () => {
   const password = document.querySelector('.textPassword');
   const userPassword = document.getElementById('password');
 
-  password.onclick = () => {
-    if (userPassword.type == 'password') {
-      userPassword.type = 'text';
-    } else userPassword.type = 'password';
-  }
+  password.onclick = () => userPassword.type === 'password' ?
+    userPassword.type = 'text' :
+    userPassword.type = 'password'
 }
 
 export const signInHandler = () => {
   const signInForm = document.querySelector('.main_content_form');
   const signInEmailInput = document.getElementById('email');
   const signInPasswordInput = document.getElementById('password');
-  const signInBtn = document.getElementById('subminBtn');
+  const signInBtn = document.getElementById('submitBtn');
 
   signInForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -36,6 +34,7 @@ export const signInHandler = () => {
       if (response) {
         const { idToken: token } = response.data;
         setToken(token);
+        // There is will be message 'Hello, username'
         const redirect = () =>  window.location.href = routes.home;
         setTimeout(redirect, 3000);
       }

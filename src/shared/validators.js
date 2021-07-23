@@ -27,25 +27,13 @@ const lowerCaseCheck = password => {
   return result;
 }
 
-const upperCaseCheck = password => {
-  const result = userPasswordUpperCaseValid.test(password);
-  return result;
-}
+const upperCaseCheck = password => userPasswordUpperCaseValid.test(password);
 
-const numberCheck = password => {
-  const result = userPasswordNumbersValid.test(password);
-  return result;
-}
+const numberCheck = password => userPasswordNumbersValid.test(password);
 
-const lengthCheck = password => {
-  const result = userPasswordLengthValid.test(password);
-  return result;
-}
+const lengthCheck = password => userPasswordLengthValid.test(password);
 
-const symbolsCheck = password => {
-  const result = userPasswordMinSymbolsValid.test(password);
-  return result;
-}
+const symbolsCheck = password => userPasswordMinSymbolsValid.test(password);
 
 export const nameValidator = userName => userNameCheck(userName);
 
