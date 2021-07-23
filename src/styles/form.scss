@@ -1,4 +1,4 @@
-.mainUp_content {
+.main_content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +7,6 @@
     font-size: 30px;
     color: #fff;
   }
-
   &_form {
     width: 50%;
     border: 2px solid #fff;
@@ -15,28 +14,18 @@
     padding: 40px 40px;
     align-items: center;
 
-    p {
-      font-size: 15px;
-    }
+    .mb-3 {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
-    &.red {
-      color: red;
-    }
-
-    &.orange {
-      color: orange;
-    }
-
-    &.yellow {
-      color: yellow;
-    }
-
-    &.blue {
-      color: blue;
-    }
-
-    &.green {
-      color: green;
+      .input {
+        width: 600px;
+      }
+      img {
+        width: 40px;
+      }
     }
 
     .image {
@@ -56,7 +45,6 @@
       text-align: center;
       font-size: 40px;
       margin-bottom: 10px;
-
       #colorStart {
         color: #494949;
       }
@@ -66,4 +54,17 @@
       }
     }
   }
+}
+
+.info-message {
+  height: auto;
+  width: 200px;
+  border: 2px solid #973c15;
+  border-radius: 20px;
+  position: absolute;
+  top: 35%;
+  padding: 10px;
+  left: 75%;
+  font-size: 12px;
+  display: none;
 }

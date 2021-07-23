@@ -3,7 +3,12 @@
   border-radius: 20px;
 }
 
-#subminBtn {
+#submitBtnUp, #subminBtnIn {
   background-color: #973c15;
   border-color: #973c15;
+
+  :hover {
+    background-color: #973c15;
+    border-color: #973c15;
+  }
 }
