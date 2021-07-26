@@ -3,6 +3,7 @@ import { setUserEmail, setToken } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 import { routes, paths } from '../../shared/constants/routes';
+import { showErrorNotification } from '../../shared/error-handlers';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
@@ -52,22 +53,32 @@ export const signUpHandler = () => {
 
   userNickname.oninput = () => {
     nameValidator(userNickname.value) ? inputForm.userName.isValid = true : inputForm.userName.isValid = false;
+    if (inputForm.userName.isValid) {
+      userNickname.classList.add('green');
+    } else userNickname.classList.add('red');
     checkFormValid();
   }
 
   userEmail.oninput = () => {
     emailValidator(userEmail.value) ? inputForm.email.isValid = true : inputForm.email.isValid = false;
+    if (inputForm.email.isValid) {
+      userEmail.classList.add('green');
+    } else userEmail.classList.add('red');
     checkFormValid();
   }
 
   userPassword.oninput = () => {
-    inputForm.password.isValid = passwordPower(password.value);
+    if (password.value) {
+      inputForm.password.isValid = passwordPower(password.value);
+    } else inputForm.password.isValid = passwordPower(password.value);
+    
     checkFormValid();
   }
 
   userConfirmPassword.oninput = () => {
     if (inputForm.password.isValid && ( userPassword.value === userConfirmPassword.value)) {
       inputForm.confirmPassword.isValid = true;
+      userConfirmPassword.classList.add('green');
     } else inputForm.confirmPassword.isValid = false;
     checkFormValid();
   }

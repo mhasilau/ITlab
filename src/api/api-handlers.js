@@ -26,7 +26,7 @@ export const signUp = async (email, password) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(response => response)
-      .catch(err => showErrorNotification(err));
+      .catch( error => showErrorNotification(error));
 }
 
 initApi();
