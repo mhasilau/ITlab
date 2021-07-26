@@ -11,21 +11,13 @@ import {
 
 const userNameCheck = userName => userNameValid.test(userName);
 const userEmailCheck = userEmail => userEmailValid.test(userEmail);
-const serPasswordLengthCheck = password => userPasswordLengthValid.test(password);
-const userPasswordLowerCheck = password => userPasswordLowerCaseValid.test(password);
-const userPasswordUpperCheck = password => userPasswordUpperCaseValid.test(password);
-const userPasswordNumbersCheck = password => userPasswordNumbersValid.test(password);
-const userPasswordMinSymbolsCheck = password => userPasswordMinSymbolsValid.test(password);
 
 const userNickname = document.getElementById('username');
 const userEmail = document.getElementById('email');
 const userPassword = document.getElementById('password');
 const userConfirmPassword = document.getElementById('confirmPassword');
 
-const lowerCaseCheck = password => {
-  const result = userPasswordLowerCaseValid.test(password);
-  return result;
-}
+const lowerCaseCheck = password => userPasswordLowerCaseValid.test(password);
 
 const upperCaseCheck = password => userPasswordUpperCaseValid.test(password);
 
@@ -41,13 +33,14 @@ export const emailValidator = email => userEmailCheck(email);
 
 export const passwordPower = password => {
 
-  const passwordStrengthNum = lengthCheck(password) +
+  let passwordStrengthNum = lengthCheck(password) +
     lowerCaseCheck(password) +
     upperCaseCheck(password) +
     numberCheck(password) +
-    symbolsCheck(password)
+    symbolsCheck(password);
 
     console.log(passwordStrengthNum);
+
 
     switch (passwordStrengthNum) {
       case 1:
@@ -73,5 +66,6 @@ export const passwordPower = password => {
         userPassword.classList.remove('red');
         break;
     }
-    return passwordStrengthNum === 5;
+  return passwordStrengthNum === (2 || 3 || 4 || 5);
 }
+
