@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 
 import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
-import { setToken } from '../../shared/local-storage/ls-config';
+import { setToken, setUserEmail } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower } from '../../shared/validators';
 
@@ -34,6 +34,7 @@ export const signInHandler = () => {
       if (response) {
         const { idToken: token } = response.data;
         setToken(token);
+        setUserEmail(email);
         // There is will be message 'Hello, username'
         const redirect = () =>  window.location.href = routes.home;
         setTimeout(redirect, 3000);

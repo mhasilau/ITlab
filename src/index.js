@@ -2,6 +2,7 @@ import { routes, paths } from './shared/constants/routes';
 import { signInHandler,showHidePasswordIn, showMessageBoardIn } from './components/sign-in/sign-in';
 import { signUpHandler, showHidePasswordUp, showMessageBoardUp } from './components/sign-up/sign-up';
 import { getToken } from './shared/local-storage/ls-config';
+import { postForm, logout } from './home/home';
 
 import './styles/style.scss';
 
@@ -12,9 +13,9 @@ window.onload = () => {
       const token = getToken();
       if (!token) {
           window.location.href = routes.sign_in;
-      } else {
-
       }
+      postForm();
+      logout();
       break;
     case paths.sign_in:
       signInHandler();

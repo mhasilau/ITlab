@@ -1,0 +1,50 @@
+.main-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+
+  &-menu {
+    width: 10vw;
+    padding: 10px;
+    text-align: end;
+  }
+
+  &-user {
+    padding: 10px;
+
+    &-photo {
+      width: 10vw;
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  &-posts {
+    width: 30vw;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+
+    .media-buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+
+      img, button {
+        margin-right: 15px;
+      }
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+  }
+}
