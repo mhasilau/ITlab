@@ -102,6 +102,7 @@ export const signUpHandler = () => {
             if (response) {
               const { idToken: token } = response.data;
               setToken(token);
+              setUserEmail(email);
               const redirect = () =>  window.location.href = routes.home;
               setTimeout(redirect, 3000);
             }

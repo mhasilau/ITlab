@@ -29,4 +29,21 @@ export const signUp = async (email, password) => {
       .catch( error => showErrorNotification(error));
 }
 
+export const createPost = post => {
+  const { userId, email, date, content } = post;
+  return fetch(`${databaseURL}/posts.json`,
+  {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          userId,
+          email,
+          date,
+          content
+      })
+  });
+}
+
 initApi();
