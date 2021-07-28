@@ -6,7 +6,6 @@ import axios from 'axios';
 import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 
-
 export const initApi = () => {
   firebase.initializeApp(FIREBASE_CONFIG);
 }
@@ -14,9 +13,9 @@ export const initApi = () => {
 export const signIn = (email, password) => {
   return axios.post(authURL, {
     email,
-      password,
-      returnSecureToken: true
-    })
+    password,
+    returnSecureToken: true
+  })
     .then( response => response)
     .catch( error => showErrorNotification(error));
   }
@@ -43,6 +42,24 @@ export const createPost = post => {
           date,
           content
       })
+  });
+}
+
+export const getPosts = () => {
+  return fetch(`${databaseURL}/posts.json`,
+  {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+  })
+  .then( response => response.json())
+  .then( result => {
+      const gettingKeysFromObj = Object.keys(result).map( key => ({
+          ...result[key],
+          id: key
+      }));
+      return gettingKeysFromObj;
   });
 }
 
