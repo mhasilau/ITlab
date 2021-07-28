@@ -22,7 +22,12 @@ module.exports = {
           filename: 'sign-up.html',
           template: './src/components/sign-up/sign-up.html',
           favicon: './src/assets/pictures/favico.png'
-      })
+      }),
+      new HTMLWebpackPlugin({
+        filename: 'news.html',
+        template: './src/components/news/news.html',
+        favicon: './src/assets/pictures/favico.png'
+    })
   ],
   module: {
     rules: [

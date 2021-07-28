@@ -40,30 +40,24 @@ export const renderPosts = () => {
     .then( posts => {
       const postsBlock = document.querySelector('.renger-posts');
       postsBlock.innerHTML = null;
-
       posts.forEach( item => {
-        console.log(item);
-        const id = item.id;
-        console.log(id);
-        if ( id === item.id ) {
-          const post = document.createElement('div');
-          const content = document.createElement('p');
-          const infoName = document.createElement('span');
-          const infoDate = document.createElement('span');
 
-          post.className = 'renger-posts-post';
-          content.className = 'renger-posts-content';
-          infoName.className = 'renger-posts-info';
-          infoDate.className = 'renger-posts-info';
+        const post = document.createElement('div');
+        const content = document.createElement('p');
+        const infoName = document.createElement('span');
+        const infoDate = document.createElement('span');
 
-          content.innerHTML = item.content;
-          infoName.innerHTML = `${item.email}, `;
-          infoDate.innerHTML = moment(item.date).format('MMM Do YY');
+        post.className = 'renger-posts-post';
+        content.className = 'renger-posts-content';
+        infoName.className = 'renger-posts-info';
+        infoDate.className = 'renger-posts-info';
 
-          postsBlock.append(post);
-          post.append(content, infoName, infoDate);
+        content.innerHTML = item.content;
+        infoName.innerHTML = `${item.email}, `;
+        infoDate.innerHTML = moment(item.date).format('MMM Do YY');
 
-        }
+        postsBlock.append(post);
+        post.append(content, infoName, infoDate);
       })
   });
 }

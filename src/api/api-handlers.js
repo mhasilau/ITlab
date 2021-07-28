@@ -6,7 +6,6 @@ import axios from 'axios';
 import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 
-
 export const initApi = () => {
   firebase.initializeApp(FIREBASE_CONFIG);
 }
@@ -63,8 +62,5 @@ export const getPosts = () => {
       return gettingKeysFromObj;
   });
 }
-
-
-
 
 initApi();
