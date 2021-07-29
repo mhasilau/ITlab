@@ -56,7 +56,7 @@ export const renderPosts = () => {
         infoName.innerHTML = `${item.email}, `;
         infoDate.innerHTML = moment(item.date).format('MMM Do YY');
 
-        postsBlock.append(post);
+        postsBlock.prepend(post);
         post.append(content, infoName, infoDate);
       })
   });

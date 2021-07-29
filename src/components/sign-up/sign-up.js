@@ -3,7 +3,6 @@ import { setUserEmail, setToken } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 import { routes, paths } from '../../shared/constants/routes';
-import { showErrorNotification } from '../../shared/error-handlers';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
@@ -71,7 +70,6 @@ export const signUpHandler = () => {
     if (password.value) {
       inputForm.password.isValid = passwordPower(password.value);
     } else inputForm.password.isValid = passwordPower(password.value);
-    
     checkFormValid();
   }
 
@@ -79,7 +77,10 @@ export const signUpHandler = () => {
     if (inputForm.password.isValid && ( userPassword.value === userConfirmPassword.value)) {
       inputForm.confirmPassword.isValid = true;
       userConfirmPassword.classList.add('green');
-    } else inputForm.confirmPassword.isValid = false;
+    } else {
+      inputForm.confirmPassword.isValid = false;
+      userConfirmPassword.classList.add('red');
+    }
     checkFormValid();
   }
 
@@ -119,7 +120,6 @@ export const showMessageBoardUp = () => {
   const confirmPasswordTip = document.getElementById('confirmPasswordTip');
 
   usernameTip.onclick = () => {
-    console.log('usernameTip');
     messageText.innerText = INFO_MESSAGE.username;
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
@@ -127,7 +127,6 @@ export const showMessageBoardUp = () => {
   }
 
   emailTip.onclick = () => {
-    console.log('emailTip');
     messageText.innerText = INFO_MESSAGE.email;
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
@@ -135,7 +134,6 @@ export const showMessageBoardUp = () => {
   }
 
   passwordTip.onclick = () => {
-    console.log('passwordTip');
     messageText.innerText = INFO_MESSAGE.password;
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
@@ -143,7 +141,6 @@ export const showMessageBoardUp = () => {
   }
 
   confirmPasswordTip.onclick = () => {
-    console.log('confirmPasswordTip');
     messageText.innerText = INFO_MESSAGE.confirmPassword;
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
