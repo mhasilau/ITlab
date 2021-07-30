@@ -29,7 +29,7 @@ export const signUp = async (email, password) => {
 }
 
 export const createPost = post => {
-  const { userId, email, date, content } = post;
+  const { userId, username, date, content } = post;
   return fetch(`${databaseURL}/posts.json`,
   {
       method: 'POST',
@@ -38,7 +38,7 @@ export const createPost = post => {
       },
       body: JSON.stringify({
           userId,
-          email,
+          username,
           date,
           content
       })
@@ -47,6 +47,39 @@ export const createPost = post => {
 
 export const getPosts = () => {
   return fetch(`${databaseURL}/posts.json`,
+  {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+  })
+  .then( response => response.json())
+  .then( result => {
+      const gettingKeysFromObj = Object.keys(result).map( key => ({
+          ...result[key],
+          id: key
+      }));
+      return gettingKeysFromObj;
+  });
+}
+
+export const createUser =  user  => {
+  const { username, email } = user;
+  return fetch(`${databaseURL}/users.json`,
+  {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          username,
+          email
+      })
+  });
+}
+
+export const getUsers = () => {
+  return fetch(`${databaseURL}/users.json`,
   {
     method: 'GET',
     headers: {

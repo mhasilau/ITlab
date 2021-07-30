@@ -30,11 +30,11 @@ window.onload = () => {
       showHidePasswordUp();
       showMessageBoardUp();
       break;
-      case paths.news:
-        renderPosts();
-        logout();
-        webPageLinks();
-        break;
+    case paths.news:
+      renderPosts();
+      logout();
+      webPageLinks();
+      break;
     default:
       break;
   }

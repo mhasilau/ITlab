@@ -1,18 +1,23 @@
-import { signUp, signIn } from "../../api/api-handlers";
-import { setUserEmail, setToken } from "../../shared/local-storage/ls-config";
+import { signUp, signIn, createUser } from "../../api/api-handlers";
+import { getUserEmail, setUserEmail, setToken, setUserName, getUserName } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 import { routes, paths } from '../../shared/constants/routes';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
-
 const signUpForm = document.querySelector('.main_content_form');
 const userNickname = document.getElementById('username');
 const userEmail = document.getElementById('email');
 const userPassword = document.getElementById('password');
 const userConfirmPassword = document.getElementById('confirmPassword');
 const submitBtnUp = document.getElementById('submitBtnUp')
+const helpMessageUser = document.getElementById('usernameError');
+const helpMessageEmail = document.getElementById('emailError');
+const helpMessagePassword = document.getElementById('passwordError');
+const helpMessageConfirmPassword = document.getElementById('passwordConfirmError');
+
+
 
 const inputForm = {
   userName: {
@@ -50,11 +55,25 @@ export const showHidePasswordUp = () => {
 export const signUpHandler = () => {
   submitBtnUp.setAttribute('disabled', true);
 
+  helpMessageUser.style.display = 'none';
+  helpMessageEmail.style.display = 'none';
+  helpMessagePassword.style.display = 'none';
+  helpMessageConfirmPassword.style.display = 'none';
+
+  helpMessageUser.innerText = 'Incorrect username. Click help';
+  helpMessageEmail.innerText = 'Incorrect e-mail. Click help';
+  helpMessagePassword.innerText = 'Please, enter correct password.';
+  helpMessageConfirmPassword.innerText = 'Please, confirm your correct password';
+
   userNickname.oninput = () => {
     nameValidator(userNickname.value) ? inputForm.userName.isValid = true : inputForm.userName.isValid = false;
     if (inputForm.userName.isValid) {
       userNickname.classList.add('green');
-    } else userNickname.classList.add('red');
+      helpMessageUser.style.display = 'none';
+    } else {
+      userNickname.classList.add('red');
+      helpMessageUser.style.display = 'block';
+    }
     checkFormValid();
   }
 
@@ -62,24 +81,32 @@ export const signUpHandler = () => {
     emailValidator(userEmail.value) ? inputForm.email.isValid = true : inputForm.email.isValid = false;
     if (inputForm.email.isValid) {
       userEmail.classList.add('green');
-    } else userEmail.classList.add('red');
+      helpMessageEmail.style.display = 'none';
+    } else {
+      userEmail.classList.add('red');
+      helpMessageEmail.style.display = 'block';
+    }
     checkFormValid();
   }
 
   userPassword.oninput = () => {
     if (password.value) {
       inputForm.password.isValid = passwordPower(password.value);
-    } else inputForm.password.isValid = passwordPower(password.value);
+      helpMessagePassword.style.display = 'none';
+    } else {
+      inputForm.password.isValid = passwordPower(password.value);
+      helpMessagePassword.style.display = 'block';
+    }
     checkFormValid();
   }
 
   userConfirmPassword.oninput = () => {
     if (inputForm.password.isValid && ( userPassword.value === userConfirmPassword.value)) {
       inputForm.confirmPassword.isValid = true;
-      userConfirmPassword.classList.add('green');
+      helpMessageConfirmPassword.style.display = 'none';
     } else {
       inputForm.confirmPassword.isValid = false;
-      userConfirmPassword.classList.add('red');
+      helpMessageConfirmPassword.style.display = 'block';
     }
     checkFormValid();
   }
@@ -94,6 +121,12 @@ export const signUpHandler = () => {
 
     const email = userEmail.value;
     const password = userPassword.value;
+    const username = userNickname.value;
+
+    const user = {
+      username: getUserName(),
+      email: getUserEmail()
+    }
 
     signUp(email, password)
       .then( response => {
@@ -101,9 +134,11 @@ export const signUpHandler = () => {
         if (response) {
           signIn(email, password).then(response => {
             if (response) {
-              const { idToken: token } = response.data;
+              const { idToken: token, email } = response.data;
               setToken(token);
               setUserEmail(email);
+              setUserName(username);
+              createUser(user);
               const redirect = () =>  window.location.href = routes.home;
               setTimeout(redirect, 3000);
             }

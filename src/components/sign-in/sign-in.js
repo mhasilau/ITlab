@@ -4,9 +4,13 @@ import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
 import { setToken, setUserEmail } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
+import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
+
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
+const helpMessageEmail = document.getElementById('emailError');
+const helpMessagePassword = document.getElementById('passwordError');
 
 export const showHidePasswordIn = () => {
   const password = document.querySelector('.textPassword');
@@ -22,6 +26,23 @@ export const signInHandler = () => {
   const signInEmailInput = document.getElementById('email');
   const signInPasswordInput = document.getElementById('password');
   const signInBtn = document.getElementById('submitBtn');
+
+  helpMessageEmail.style.display = 'none';
+  helpMessagePassword.style.display = 'none';
+
+  helpMessageEmail.innerText = 'Incorrect e-mail. Click help';
+  helpMessagePassword.innerText = 'Please, enter correct password.';
+
+  signInEmailInput.oninput = () => {
+    if (emailValidator(signInEmailInput.value)) {
+      signInEmailInput.classList.add('green');
+      helpMessageEmail.style.display = 'none';
+    } else {
+      signInEmailInput.classList.add('red');
+      helpMessageEmail.style.display = 'block';
+    }
+  }
+
 
   signInForm.addEventListener('submit', event => {
     event.preventDefault();
