@@ -134,7 +134,7 @@ export const signUpHandler = () => {
         if (response) {
           signIn(email, password).then(response => {
             if (response) {
-              const { idToken: token, email } = response.data;
+              const { idToken: token } = response.data;
               setToken(token);
               setUserEmail(email);
               setUserName(username);
@@ -154,31 +154,29 @@ export const showMessageBoardUp = () => {
   const passwordTip = document.getElementById('passwordTip');
   const confirmPasswordTip = document.getElementById('confirmPasswordTip');
 
-  usernameTip.onclick = () => {
-    messageText.innerText = INFO_MESSAGE.username;
+  const message = () => {
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
     setTimeout(block, 3000)
+  }
+
+  usernameTip.onclick = () => {
+    messageText.innerText = INFO_MESSAGE.username;
+    message();
   }
 
   emailTip.onclick = () => {
     messageText.innerText = INFO_MESSAGE.email;
-    messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    message();
   }
 
   passwordTip.onclick = () => {
     messageText.innerText = INFO_MESSAGE.password;
-    messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    message();
   }
 
   confirmPasswordTip.onclick = () => {
     messageText.innerText = INFO_MESSAGE.confirmPassword;
-    messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000);
+    message();
   }
 }

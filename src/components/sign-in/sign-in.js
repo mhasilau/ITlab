@@ -65,17 +65,19 @@ export const showMessageBoardIn = () => {
   const emailTip = document.getElementById('emailTip');
   const passwordTip = document.getElementById('passwordTip');
 
-  emailTip.onclick = () => {
-    messageText.innerText = INFO_MESSAGE.emailIn;
+  const message = () => {
     messageBlock.style.display = 'block';
     const block = () => messageBlock.style.display = 'none';
     setTimeout(block, 3000)
   }
 
+  emailTip.onclick = () => {
+    messageText.innerText = INFO_MESSAGE.emailIn;
+    message();
+  }
+
   passwordTip.onclick = () => {
     messageText.innerText = INFO_MESSAGE.passwordIn;
-    messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    message();
   }
 }

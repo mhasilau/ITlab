@@ -24,9 +24,6 @@ export const passwordPower = password => {
     lowerCaseCheck(password) +
     numberCheck(password);
 
-    console.log(passwordStrengthNum);
-
-
     switch (passwordStrengthNum) {
       case 1:
         userPassword.classList.add('red');
