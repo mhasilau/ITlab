@@ -43,7 +43,6 @@ export const signInHandler = () => {
     }
   }
 
-
   signInForm.addEventListener('submit', event => {
     event.preventDefault();
     const email = signInEmailInput.value;
