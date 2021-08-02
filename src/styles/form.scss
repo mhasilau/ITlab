@@ -7,6 +7,16 @@
     font-size: 30px;
     color: #fff;
   }
+
+  .error-message {
+    height: 15px;
+    
+    p {
+      font-size: 12px;
+      color: black;
+    }
+  }
+
   &_form {
     width: 50%;
     border: 2px solid #fff;
@@ -27,16 +37,8 @@
           border: 3px solid red;
         }
 
-        .orange {
-          border: 3px solid orange;
-        }
-
         .yellow {
           border: 3px solid yellow;
-        }
-
-        .blue {
-          border: 3px solid blue;
         }
 
         .green {

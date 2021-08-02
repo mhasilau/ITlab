@@ -1,15 +1,16 @@
 require('firebase/auth');
 
-import firebase from 'firebase/app';
-
 import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
 import { setToken, setUserEmail } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
-import { passwordPower } from '../../shared/validators';
+import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
+
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
+const helpMessageEmail = document.getElementById('emailError');
+const helpMessagePassword = document.getElementById('passwordError');
 
 export const showHidePasswordIn = () => {
   const password = document.querySelector('.textPassword');
@@ -25,6 +26,22 @@ export const signInHandler = () => {
   const signInEmailInput = document.getElementById('email');
   const signInPasswordInput = document.getElementById('password');
   const signInBtn = document.getElementById('submitBtn');
+
+  helpMessageEmail.style.display = 'none';
+  helpMessagePassword.style.display = 'none';
+
+  helpMessageEmail.innerText = 'Incorrect e-mail. Click help';
+  helpMessagePassword.innerText = 'Please, enter correct password.';
+
+  signInEmailInput.oninput = () => {
+    if (emailValidator(signInEmailInput.value)) {
+      signInEmailInput.classList.add('green');
+      helpMessageEmail.style.display = 'none';
+    } else {
+      signInEmailInput.classList.add('red');
+      helpMessageEmail.style.display = 'block';
+    }
+  }
 
   signInForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -47,19 +64,18 @@ export const showMessageBoardIn = () => {
   const emailTip = document.getElementById('emailTip');
   const passwordTip = document.getElementById('passwordTip');
 
-  emailTip.onclick = () => {
-    console.log('emailTip');
-    messageText.innerText = INFO_MESSAGE.emailIn;
+  const message = () => {
     messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    setTimeout( () => messageBlock.style.display = 'none', 3000)
+  }
+
+  emailTip.onclick = () => {
+    messageText.innerText = INFO_MESSAGE.emailIn;
+    message();
   }
 
   passwordTip.onclick = () => {
-    console.log('passwordTip');
     messageText.innerText = INFO_MESSAGE.passwordIn;
-    messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    message();
   }
 }

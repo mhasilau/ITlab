@@ -4,6 +4,7 @@ import { signUpHandler, showHidePasswordUp, showMessageBoardUp } from './compone
 import { getToken } from './shared/local-storage/ls-config';
 import { postForm, logout, renderPosts } from './home/home';
 import { webPageLinks } from './shared/constants/location';
+import { newsHandler } from './components/news/news';
 
 import './styles/style.scss';
 
@@ -30,11 +31,9 @@ window.onload = () => {
       showHidePasswordUp();
       showMessageBoardUp();
       break;
-      case paths.news:
-        renderPosts();
-        logout();
-        webPageLinks();
-        break;
+    case paths.news:
+      newsHandler();
+      break;
     default:
       break;
   }

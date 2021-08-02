@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getUserEmail, removeToken, removeUserEmail } from '../shared/local-storage/ls-config';
+import { removeAll, getUserName } from '../shared/local-storage/ls-config';
 import { createPost, getPosts } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 
@@ -12,7 +12,7 @@ export const postForm = () => {
 
   const post = {
     userId: uuidv4(),
-    email: getUserEmail(),
+    username: getUserName(),
     date: moment().format(),
     content: post_content
   }
@@ -21,16 +21,15 @@ export const postForm = () => {
     event.preventDefault();
     post.content = post_content.value;
     createPost(post)
-    .then( () => console.log('lol')); //not yet render function
     post_content.value = null;
+    window.location.reload();
   });
 }
 
 export const logout = () => {
   const logoutBtn = document.getElementById('logout-btn');
   logoutBtn.onclick = () => {
-    removeToken();
-    removeUserEmail();
+    removeAll();
     window.location.href = routes.sign_in;
   }
 }
@@ -41,7 +40,6 @@ export const renderPosts = () => {
       const postsBlock = document.querySelector('.renger-posts');
       postsBlock.innerHTML = null;
       posts.forEach( item => {
-
         const post = document.createElement('div');
         const content = document.createElement('p');
         const infoName = document.createElement('span');
@@ -53,10 +51,10 @@ export const renderPosts = () => {
         infoDate.className = 'renger-posts-info';
 
         content.innerHTML = item.content;
-        infoName.innerHTML = `${item.email}, `;
+        infoName.innerHTML = `${item.username}, `;
         infoDate.innerHTML = moment(item.date).format('MMM Do YY');
 
-        postsBlock.append(post);
+        postsBlock.prepend(post);
         post.append(content, infoName, infoDate);
       })
   });
