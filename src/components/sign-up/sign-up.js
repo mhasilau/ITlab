@@ -136,11 +136,9 @@ export const signUpHandler = () => {
             if (response) {
               const { idToken: token } = response.data;
               setToken(token);
-              setUserEmail(email);
-              setUserName(username);
               createUser(user);
               const redirect = () =>  window.location.href = routes.home;
-              setTimeout(redirect, 3000);
+              setTimeout( () =>  window.location.href = routes.home, 3000);
             }
           });
         }
@@ -156,8 +154,7 @@ export const showMessageBoardUp = () => {
 
   const message = () => {
     messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    setTimeout( () => messageBlock.style.display = 'none', 3000)
   }
 
   usernameTip.onclick = () => {

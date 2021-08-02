@@ -66,8 +66,7 @@ export const showMessageBoardIn = () => {
 
   const message = () => {
     messageBlock.style.display = 'block';
-    const block = () => messageBlock.style.display = 'none';
-    setTimeout(block, 3000)
+    setTimeout( () => messageBlock.style.display = 'none', 3000)
   }
 
   emailTip.onclick = () => {
