@@ -32,8 +32,7 @@ export const getUser = () => {
   return axios.get(`${databaseURL}/users.json`)
     .then( response => {
       if (response) {
-        const transformedUsers = 
-          Object.keys(response.data).map( key => ({...response.data[key], id: key}));
+        const transformedUsers = Object.keys(response.data).map( key => ({...response.data[key], id: key}));
         const user = transformedUsers.find( user => user.uuid === localStorageFunc.getUID());
         localStorageFunc.setUserData(user);
       }

@@ -1,8 +1,7 @@
 import moment from 'moment';
-import { v4 as uuidv4 } from 'uuid';
 
 import { localStorageFunc } from '../shared/local-storage/ls-config';
-import { createPost, getPosts } from '../api/api-handlers';
+import { createPost, getPosts, getUsers } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 
 
@@ -10,12 +9,12 @@ export const postForm = () => {
   const post_form = document.getElementById('post-form');
   const post_content = document.getElementById('post-content');
 
-  // const post = {
-  //   userId: uuidv4(),
-  //   username: getUserName(),
-  //   date: moment().format(),
-  //   content: post_content
-  // }
+  const post = {
+    userId: localStorageFunc.getUserData().id,
+    username: localStorageFunc.getUserData().username,
+    date: moment().format(),
+    content: post_content
+  }
 
   post_form.addEventListener('submit', event => {
     event.preventDefault();
@@ -34,28 +33,38 @@ export const logout = () => {
   }
 }
 
-export const renderPosts = () => {
-  getPosts()
-    .then( posts => {
-      const postsBlock = document.querySelector('.renger-posts');
-      postsBlock.innerHTML = null;
-      posts.forEach( item => {
-        const post = document.createElement('div');
-        const content = document.createElement('p');
-        const infoName = document.createElement('span');
-        const infoDate = document.createElement('span');
+export const renderPosts = async () => {
+  const postsBlock = document.querySelector('.renger-posts');
+  let users;
+  let posts;
 
-        post.className = 'renger-posts-post';
-        content.className = 'renger-posts-content';
-        infoName.className = 'renger-posts-info';
-        infoDate.className = 'renger-posts-info';
+  postsBlock.innerHTML = null;
 
-        content.innerHTML = item.content;
-        infoName.innerHTML = `${item.username}, `;
-        infoDate.innerHTML = moment(item.date).format('MMM Do YY');
+  await getPosts().then( response => posts = response );
+  await getUsers().then( response => users = response );
 
-        postsBlock.prepend(post);
-        post.append(content, infoName, infoDate);
-      })
+  posts.forEach( post => {
+    const user = users.find(user => user.id === post.userId);
+    const postPlace = document.createElement('div');
+    const content = document.createElement('p');
+    const infoName = document.createElement('span');
+    const infoDate = document.createElement('span');
+
+    postPlace.className = 'renger-posts-post';
+    content.className = 'renger-posts-content';
+    infoName.className = 'renger-posts-info';
+    infoDate.className = 'renger-posts-info';
+
+    if (user.uuid !== localStorageFunc.getUID()) {
+      postPlace.style.display = 'none';
+    }
+
+    content.innerHTML = post.content;
+    infoName.innerHTML = `${post.username}, `;
+    infoDate.innerHTML = moment(post.date).format('MMM Do YY');
+
+    postsBlock.prepend(postPlace);
+    postPlace.append(content, infoName, infoDate);
+
   });
 }
