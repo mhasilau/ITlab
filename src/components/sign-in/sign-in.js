@@ -2,7 +2,7 @@ require('firebase/auth');
 
 import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
-import { setToken, setUserEmail } from '../../shared/local-storage/ls-config';
+import { localStorageFunc } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 
@@ -50,11 +50,9 @@ export const signInHandler = () => {
     signIn(email, password).then(response => {
       if (response) {
         const { idToken: token } = response.data;
-        setToken(token);
-        setUserEmail(email);
+        localStorageFunc.setToken(token);
         // There is will be message 'Hello, username'
-        const redirect = () =>  window.location.href = routes.home;
-        setTimeout(redirect, 3000);
+        setTimeout( () =>  window.location.href = routes.home, 3000);
       }
     });
   });

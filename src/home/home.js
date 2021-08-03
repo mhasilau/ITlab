@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
-import { removeAll, getUserName } from '../shared/local-storage/ls-config';
+import { localStorageFunc } from '../shared/local-storage/ls-config';
 import { createPost, getPosts } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 
@@ -10,12 +10,12 @@ export const postForm = () => {
   const post_form = document.getElementById('post-form');
   const post_content = document.getElementById('post-content');
 
-  const post = {
-    userId: uuidv4(),
-    username: getUserName(),
-    date: moment().format(),
-    content: post_content
-  }
+  // const post = {
+  //   userId: uuidv4(),
+  //   username: getUserName(),
+  //   date: moment().format(),
+  //   content: post_content
+  // }
 
   post_form.addEventListener('submit', event => {
     event.preventDefault();
@@ -29,7 +29,7 @@ export const postForm = () => {
 export const logout = () => {
   const logoutBtn = document.getElementById('logout-btn');
   logoutBtn.onclick = () => {
-    removeAll();
+    localStorageFunc.removeAll();
     window.location.href = routes.sign_in;
   }
 }

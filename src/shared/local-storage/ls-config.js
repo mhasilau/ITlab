@@ -1,25 +1,37 @@
-export const getToken = () => localStorage.getItem('token');
+export class localStorageFunc {
+  static getToken() {
+    return localStorage.getItem('token');
+  }
 
-export const setToken = token => localStorage.setItem('token', token);
+  static setToken(token) {
+    localStorage.setItem('token', token);
+  }
 
-export const removeToken = () => localStorage.removeItem('token');
+  static getUserData() {
+    return JSON.parse(localStorage.getItem('userData'));
+  }
 
-export const getUserEmail = () => localStorage.getItem('userEmail');
+  static setUserData(user) {
+    localStorage.setItem('userData', JSON.stringify(user));
+  }
 
-export const setUserEmail = email => localStorage.setItem('userEmail', email);
+  static removeAll() {
+    localStorage.clear();
+  }
 
-export const removeUserEmail = () => localStorage.removeItem('userEmail');
+  static getUID() {
+    return localStorage.getItem('uid');
+  }
 
-export const removeAll = () => localStorage.clear();
+  static setUID(id) {
+    localStorage.setItem('uid', id);
+  }
 
-export const getUserName = () => localStorage.getItem('userName');
+  static getUserId() {
+    return localStorage.getItem('userId');
+  }
 
-export const setUserName = name => localStorage.setItem('userName', name);
-
-export const removeUserName = () => localStorage.removeItem('userName');
-
-export const getUID = () => localStorage.getItem('uid');
-
-export const setUID = id => localStorage.setItem('uid', id);
-
-export const removeUID = () => localStorage.removeItem('uid');
+  static setUserId(id) {
+    localStorage.setItem('userId', id);
+  }
+}
