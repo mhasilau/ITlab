@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
-import { localStorageFunc } from '../shared/local-storage/ls-config';
+import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { routes } from '../shared/constants/routes';
 
 export const initApi = () => {
@@ -21,8 +21,8 @@ export const signIn = (email, password) => {
     .then(response => {
       if (response) {
         const { idToken: token, localId } = response.data;
-        localStorageFunc.setToken(token);
-        localStorageFunc.setUID(localId);
+        LocalStorageClass.setToken(token);
+        LocalStorageClass.setUID(localId);
         getUser().then( () => window.location.href = routes.home);
       }
     });
@@ -33,8 +33,8 @@ export const getUser = () => {
     .then( response => {
       if (response) {
         const transformedUsers = Object.keys(response.data).map( key => ({...response.data[key], id: key}));
-        const user = transformedUsers.find( user => user.uuid === localStorageFunc.getUID());
-        localStorageFunc.setUserData(user);
+        const user = transformedUsers.find( user => user.uuid === LocalStorageClass.getUID());
+        LocalStorageClass.setUserData(user);
       }
     })
 }
@@ -44,7 +44,7 @@ export const signUp = async user => {
 
   try {
     await createAuthData(email, password);
-    await createUser(user).then( response => localStorageFunc.setUserId(response.data.name));
+    await createUser(user).then( response => LocalStorageClass.setUserId(response.data.name));
     await signIn(email, password);
   } catch (error) {
     showErrorNotification(error);
@@ -57,7 +57,7 @@ export const createAuthData = (email, password) => {
     .createUserWithEmailAndPassword(email, password)
     .then( response => {
       const { uid } = response.user;
-      localStorageFunc.setUID(uid);
+      LocalStorageClass.setUID(uid);
     })
 }
 
@@ -102,7 +102,7 @@ export const createUser =  user  => {
   return axios.post(`${databaseURL}/users.json`, {
     username,
     email,
-    uuid: localStorageFunc.getUID()
+    uuid: LocalStorageClass.getUID()
   });
 }
 

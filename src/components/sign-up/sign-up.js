@@ -1,5 +1,5 @@
 import { signUp } from "../../api/api-handlers";
-import { localStorageFunc } from "../../shared/local-storage/ls-config";
+import { LocalStorageClass } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 import { routes, paths } from '../../shared/constants/routes';

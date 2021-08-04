@@ -1,7 +1,7 @@
 import { logout } from '../../home/home';
 import { webPageLinks } from '../../shared/constants/location';
 import { getPosts, getUsers } from '../../api/api-handlers';
-import { localStorageFunc } from '../../shared/local-storage/ls-config';
+import { LocalStorageClass } from '../../shared/local-storage/ls-config';
 
 export const newsHandler = () => {
   webPageLinks();
@@ -31,7 +31,7 @@ export const renderPostsNews = async () => {
     infoName.className = 'renger-posts-info';
     infoDate.className = 'renger-posts-info';
 
-    if (user.uuid !== localStorageFunc.getUID()) {
+    if (user.uuid !== LocalStorageClass.getUID()) {
       postPlace.style.display = 'none';
     } else postPlace.style.display = 'block';
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { localStorageFunc } from '../shared/local-storage/ls-config';
+import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { createPost, getPosts, getUsers } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 
@@ -10,8 +10,8 @@ export const postForm = () => {
   const post_content = document.getElementById('post-content');
 
   const post = {
-    userId: localStorageFunc.getUserData().id,
-    username: localStorageFunc.getUserData().username,
+    userId: LocalStorageClass.getUserData().id,
+    username: LocalStorageClass.getUserData().username,
     date: moment().format(),
     content: post_content
   }
@@ -28,7 +28,7 @@ export const postForm = () => {
 export const logout = () => {
   const logoutBtn = document.getElementById('logout-btn');
   logoutBtn.onclick = () => {
-    localStorageFunc.removeAll();
+    LocalStorageClass.removeAll();
     window.location.href = routes.sign_in;
   }
 }
@@ -55,7 +55,7 @@ export const renderPosts = async () => {
     infoName.className = 'renger-posts-info';
     infoDate.className = 'renger-posts-info';
 
-    if (user.uuid !== localStorageFunc.getUID()) {
+    if (user.uuid !== LocalStorageClass.getUID()) {
       postPlace.style.display = 'none';
     }
 

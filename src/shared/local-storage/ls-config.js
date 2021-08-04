@@ -1,4 +1,4 @@
-export class localStorageFunc {
+export class LocalStorageClass {
   static getToken() {
     return localStorage.getItem('token');
   }
