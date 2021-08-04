@@ -33,9 +33,7 @@ export const renderPostsNews = async () => {
     infoName.className = 'renger-posts-info';
     infoDate.className = 'renger-posts-info';
 
-    if (user.uuid !== LocalStorageClass.getUID()) {
-      postPlace.style.display = 'block';
-    } else postPlace.style.display = 'none';
+    (user.uuid !== LocalStorageClass.getUID()) ? postPlace.style.display = 'block' : postPlace.style.display = 'none';
 
     content.innerHTML = post.content;
     infoName.innerHTML = `${post.username}, `;

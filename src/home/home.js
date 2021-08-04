@@ -19,10 +19,8 @@ export const postForm = () => {
   post_form.addEventListener('submit', event => {
     event.preventDefault();
     post.content = post_content.value;
-    console.log(post);
     createPost(post);
     post_content.value = null;
-    // window.location.reload();
   });
 }
 
