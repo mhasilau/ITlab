@@ -1,5 +1,5 @@
-import { signUp, signIn, createUser } from "../../api/api-handlers";
-import { getUserEmail, setUserEmail, setToken, setUserName, getUserName } from "../../shared/local-storage/ls-config";
+import { signUp } from "../../api/api-handlers";
+import { LocalStorageClass } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
 import { routes, paths } from '../../shared/constants/routes';
@@ -119,30 +119,13 @@ export const signUpHandler = () => {
   signUpForm.addEventListener('submit', event => {
     event.preventDefault();
 
-    const email = userEmail.value;
-    const password = userPassword.value;
-    const username = userNickname.value;
-
     const user = {
-      username: getUserName(),
-      email: getUserEmail()
+      username: userNickname.value,
+      email: userEmail.value,
+      password: userPassword.value
     }
 
-    signUp(email, password)
-      .then( response => {
-
-        if (response) {
-          signIn(email, password).then(response => {
-            if (response) {
-              const { idToken: token } = response.data;
-              setToken(token);
-              createUser(user);
-              const redirect = () =>  window.location.href = routes.home;
-              setTimeout( () =>  window.location.href = routes.home, 3000);
-            }
-          });
-        }
-      });
+    signUp(user);
   });
 }
 
