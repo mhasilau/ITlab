@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { logout } from '../../home/home';
 import { webPageLinks } from '../../shared/constants/location';
 import { getPosts, getUsers } from '../../api/api-handlers';
@@ -31,9 +33,7 @@ export const renderPostsNews = async () => {
     infoName.className = 'renger-posts-info';
     infoDate.className = 'renger-posts-info';
 
-    if (user.uuid !== LocalStorageClass.getUID()) {
-      postPlace.style.display = 'none';
-    } else postPlace.style.display = 'block';
+    (user.uuid !== LocalStorageClass.getUID()) ? postPlace.style.display = 'block' : postPlace.style.display = 'none';
 
     content.innerHTML = post.content;
     infoName.innerHTML = `${post.username}, `;
@@ -41,6 +41,5 @@ export const renderPostsNews = async () => {
 
     postsBlock.prepend(postPlace);
     postPlace.append(content, infoName, infoDate);
-
   });
 }
