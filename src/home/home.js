@@ -19,9 +19,10 @@ export const postForm = () => {
   post_form.addEventListener('submit', event => {
     event.preventDefault();
     post.content = post_content.value;
-    createPost(post)
+    console.log(post);
+    createPost(post);
     post_content.value = null;
-    window.location.reload();
+    // window.location.reload();
   });
 }
 
@@ -60,11 +61,10 @@ export const renderPosts = async () => {
     }
 
     content.innerHTML = post.content;
-    infoName.innerHTML = `${post.username}, `;
+    infoName.innerHTML = `${post.username},  `;
     infoDate.innerHTML = moment(post.date).format('MMM Do YY');
 
     postsBlock.prepend(postPlace);
     postPlace.append(content, infoName, infoDate);
-
   });
 }
