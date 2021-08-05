@@ -43,9 +43,9 @@ export const getUser = () => {
 
 export const signUp = async user => {
   const loader = document.querySelector('.cssload-loading');
-  loader.style.display = 'none';
-
   const { password, email } = user;
+  
+  loader.style.display = 'none';
 
   try {
     await awaiting();
