@@ -7,6 +7,7 @@ import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { routes } from '../shared/constants/routes';
+import { awaiting, stopAwaiting } from '../shared/awaiting-load';
 
 export const initApi = () => {
   firebase.initializeApp(FIREBASE_CONFIG);
@@ -25,7 +26,8 @@ export const signIn = (email, password) => {
         LocalStorageClass.setUID(localId);
         getUser().then( () => window.location.href = routes.home);
       }
-    });
+    })
+    .catch (error => showErrorNotification(error));
 }
 
 export const getUser = () => {
@@ -40,12 +42,17 @@ export const getUser = () => {
 }
 
 export const signUp = async user => {
+  const loader = document.querySelector('.cssload-loading');
+  loader.style.display = 'none';
+
   const { password, email } = user;
 
   try {
+    await awaiting();
     await createAuthData(email, password);
     await createUser(user).then( response => LocalStorageClass.setUserId(response.data.name));
     await signIn(email, password);
+    stopAwaiting();
   } catch (error) {
     showErrorNotification(error);
   }

@@ -4,8 +4,7 @@ import { signIn } from '../../api/api-handlers';
 import { routes } from '../../shared/constants/routes';
 import { LocalStorageClass } from '../../shared/local-storage/ls-config';
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
-import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
-
+import { emailValidator } from '../../shared/validators';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
@@ -32,6 +31,7 @@ export const signInHandler = () => {
 
   helpMessageEmail.innerText = 'Incorrect e-mail. Click help';
   helpMessagePassword.innerText = 'Please, enter correct password.';
+
 
   signInEmailInput.oninput = () => {
     if (emailValidator(signInEmailInput.value)) {
