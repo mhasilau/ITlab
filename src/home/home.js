@@ -1,8 +1,11 @@
 import moment from 'moment';
+import axios from 'axios';
+import firebase from 'firebase/app';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { createPost, getPosts, getUsers } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
+import { FIREBASE_CONFIG, databaseURL, authURL } from '../api/api-config';
 
 
 export const postForm = () => {
@@ -44,11 +47,17 @@ export const renderPosts = async () => {
 
   posts.forEach( post => {
     const user = users.find(user => user.id === post.userId);
+    const functionalBlock = document.createElement('div');
+    const editBnt = document.createElement('button')
+    const deleteBnt = document.createElement('button')
     const postPlace = document.createElement('div');
     const content = document.createElement('p');
     const infoName = document.createElement('span');
     const infoDate = document.createElement('span');
 
+    functionalBlock.className = 'functional-block';
+    editBnt.className = 'edit';
+    deleteBnt.className = 'delete';
     postPlace.className = 'renger-posts-post';
     content.className = 'renger-posts-content';
     infoName.className = 'renger-posts-info';
@@ -58,11 +67,21 @@ export const renderPosts = async () => {
       postPlace.style.display = 'none';
     }
 
+    const detelePost = (id) => {
+      axios.delete(`${databaseURL}/posts/${id}.json`);
+      postPlace.remove();
+    }
+
+    deleteBnt.onclick = () => {
+      detelePost(post.id);
+    }
+
     content.innerHTML = post.content;
     infoName.innerHTML = `${post.username},  `;
     infoDate.innerHTML = moment(post.date).format('MMM Do YY');
 
     postsBlock.prepend(postPlace);
-    postPlace.append(content, infoName, infoDate);
+    functionalBlock.append(editBnt, deleteBnt);
+    postPlace.append( functionalBlock, content, infoName, infoDate);
   });
 }

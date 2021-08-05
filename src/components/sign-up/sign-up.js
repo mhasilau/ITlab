@@ -54,6 +54,8 @@ export const showHidePasswordUp = () => {
 
 export const signUpHandler = () => {
   submitBtnUp.setAttribute('disabled', true);
+  const loader = document.querySelector('.cssload-loading');
+  loader.style.display = 'none';
 
   helpMessageUser.style.display = 'none';
   helpMessageEmail.style.display = 'none';
