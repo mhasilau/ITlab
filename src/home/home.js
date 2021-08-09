@@ -23,6 +23,7 @@ export const postForm = () => {
     post.content = post_content.value;
     createPost(post);
     post_content.value = null;
+    window.location.reload();
   });
 }
 
@@ -72,8 +73,9 @@ export const renderPosts = async () => {
     }
 
     const detelePost = (id) => {
-      axios.delete(`${databaseURL}/posts/${id}.json`);
       postPlace.remove();
+      axios.delete(`${databaseURL}/posts/${id}.json`)
+        .then(window.location.reload());
     }
 
     deleteBnt.onclick = () => {
@@ -85,9 +87,8 @@ export const renderPosts = async () => {
       editContent.style.display = 'block';
       saveBtn.style.display = 'block';
       editContent.innerText = post.content;
-      console.log(editContent.value);
     }
-    
+
     saveBtn.onclick = () => {
       savePost(post);
     }
@@ -98,7 +99,8 @@ export const renderPosts = async () => {
       saveBtn.style.display = 'none';
       console.log(post);
       post.content = editContent.value;
-      axios.put(`${databaseURL}/posts/${post.id}.json`, post);
+      axios.put(`${databaseURL}/posts/${post.id}.json`, post)
+        .then(window.location.reload());
     }
 
     editBnt.onclick = () => {
