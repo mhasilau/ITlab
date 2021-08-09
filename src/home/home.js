@@ -86,9 +86,8 @@ export const renderPosts = async () => {
       saveBtn.style.display = 'block';
       editContent.innerText = post.content;
       console.log(editContent.value);
-
-
     }
+    
     saveBtn.onclick = () => {
       savePost(post);
     }
@@ -99,23 +98,16 @@ export const renderPosts = async () => {
       saveBtn.style.display = 'none';
       console.log(post);
       post.content = editContent.value;
-      // console.log(post.content);
       axios.put(`${databaseURL}/posts/${post.id}.json`, post);
     }
-
 
     editBnt.onclick = () => {
       editPost(post);
     }
 
-
-
-
     content.innerHTML = post.content;
     infoName.innerHTML = `${post.username},  `;
     infoDate.innerHTML = moment(post.date).format('MMM Do YY');
-
-    // LocalStorageClass.setUserData(post.content);
 
     postsBlock.prepend(postPlace);
     functionalBlock.append(saveBtn, editBnt, deleteBnt);
