@@ -104,12 +104,16 @@ export const getPosts = () => {
 }
 
 export const createUser =  user  => {
-  const { username, email } = user;
+  const { username, email, country, birth, linkedin, github } = user;
 
   return axios.post(`${databaseURL}/users.json`, {
     username,
     email,
-    uuid: LocalStorageClass.getUID()
+    uuid: LocalStorageClass.getUID(),
+    country,
+    birth,
+    linkedin,
+    github
   });
 }
 

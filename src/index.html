@@ -34,11 +34,38 @@
           <div class="main-content-user-photo">
             <img src="./assets/pictures/avatar_test.png" alt="">
           </div>
-          <div class="main-content-user-change-photo">Change avatar</div>
-          <div class="main-content-user-change-info">Change info</div>
+          <div class="main-content-user-change-photo">
+            <button>Change avatar</button>
+          </div>
+          <div class="main-content-user-change-info">
+            <button id="change-info">Change info</button>
+            <button id="save-info">Save info</button>
+          </div>
           <div class="main-content-user-info-block"></div>
         </div>
         <div class="main-content-posts">
+          <div class="user-info">
+            <div class="user-info-input">
+              <div class="forWat"><span>username</span></div>
+              <div class="wat"><input type="text" id="username"></div>
+            </div>
+            <div class="user-info-input">
+              <div class="forWat"><span>country</span></div>
+              <div class="wat"><input type="text" id="country"></div>
+            </div>
+            <div class="user-info-input">
+              <div class="forWat"><span>birth</span></div>
+              <div class="wat"><input type="date" id="birth"></div>
+            </div>
+            <div class="user-info-input">
+              <div class="forWat"><span>linledin</span></div>
+              <div class="wat"><input type="text" id="linledin"></div>
+            </div>
+            <div class="user-info-input">
+              <div class="forWat"><span>github</span></div>
+              <div class="wat"><input type="text" id="github"></div>
+            </div>
+          </div>
           <form id="post-form">
             <div>
               <textarea id="post-content" maxlength="300"></textarea>
@@ -51,7 +78,6 @@
             </div>
           </form>
           <div class="render-posts"></div>
-        </div>
       </div>
     </div>
   </body>
