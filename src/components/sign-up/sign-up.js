@@ -124,7 +124,11 @@ export const signUpHandler = () => {
     const user = {
       username: userNickname.value,
       email: userEmail.value,
-      password: userPassword.value
+      password: userPassword.value,
+      country: 'Where are you from?',
+      birth: '01.01.1900',
+      linkedin: 'http://',
+      github: 'http://'
     }
 
     signUp(user);

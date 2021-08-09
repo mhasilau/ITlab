@@ -5,6 +5,7 @@ import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { createPost, getPosts, getUsers } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL } from '../api/api-config';
+import { showErrorNotification } from '../shared/error-handlers';
 
 
 export const postForm = () => {
@@ -73,9 +74,9 @@ export const renderPosts = async () => {
     }
 
     const deletePost = (id) => {
+      axios.delete(`${databaseURL}/posts/${id}.json`);
       postPlace.remove();
-      axios.delete(`${databaseURL}/posts/${id}.json`)
-        .then(window.location.reload());
+      window.location.reload();
     }
 
     deleteBnt.onclick = () => deletePost(post.id);
@@ -95,7 +96,8 @@ export const renderPosts = async () => {
       saveBtn.style.display = 'none';
       post.content = editContent.value;
       axios.put(`${databaseURL}/posts/${post.id}.json`, post)
-        .then(window.location.reload());
+        .catch( error => showErrorNotification(error));
+      window.location.reload();
     }
 
     editBnt.onclick = () => editPost(post);
@@ -108,4 +110,65 @@ export const renderPosts = async () => {
     functionalBlock.append(saveBtn, editBnt, deleteBnt);
     postPlace.append( functionalBlock, editContent, content, infoName, infoDate);
   });
+}
+
+export const changeUserData = () => {
+  const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
+
+  const change_info = document.getElementById('change-info');
+  const save_info = document.getElementById('save-info');
+  const usernameInp = document.getElementById('username');
+  const countryInp = document.getElementById('country');
+  const birthInp = document.getElementById('birth');
+  const linledinInp = document.getElementById('linledin');
+  const githubInp = document.getElementById('github');
+
+  usernameInp.value = username;
+  countryInp.value = country;
+  birthInp.value = birth;
+  linledinInp.value = linkedin;
+  githubInp.value = github;
+
+  save_info.style.display = 'none';
+  usernameInp.setAttribute('disabled', true);
+  countryInp.setAttribute('disabled', true);
+  birthInp.setAttribute('disabled', true);
+  linledinInp.setAttribute('disabled', true);
+  githubInp.setAttribute('disabled', true);
+
+  change_info.onclick = () => {
+    save_info.style.display = 'block';
+    change_info.style.display = 'none';
+
+
+    usernameInp.removeAttribute('disabled');
+    countryInp.removeAttribute('disabled');
+    birthInp.removeAttribute('disabled');
+    linledinInp.removeAttribute('disabled');
+    githubInp.removeAttribute('disabled');
+
+    const userUpd = {
+      username: usernameInp.value,
+      country: countryInp.value,
+      birth: birthInp.value,
+      linkedin: linledinInp.value,
+      github: githubInp.value,
+      id: id,
+      uuid: uuid
+    }
+    
+    save_info.onclick = () => {
+      saveInfo(userUpd);
+      save_info.style.display = 'none';
+      change_info.style.display = 'block';
+    }
+
+    const saveInfo = async (user) => {
+      axios.put(`${databaseURL}/users/${user.id}.json`, user)
+      .then(() => {
+        LocalStorageClass.setUserData(user);
+      })
+      .catch( error => showErrorNotification(error));;
+    }
+  }
 }

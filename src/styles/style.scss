@@ -15,4 +15,9 @@
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 100%;
   color: #973c15;
+
+  input, textarea {
+    outline: none;
+    border: none;
+    }
 }

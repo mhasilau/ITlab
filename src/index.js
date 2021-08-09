@@ -2,7 +2,7 @@ import { routes, paths } from './shared/constants/routes';
 import { signInHandler,showHidePasswordIn, showMessageBoardIn } from './components/sign-in/sign-in';
 import { signUpHandler, showHidePasswordUp, showMessageBoardUp } from './components/sign-up/sign-up';
 import { LocalStorageClass } from './shared/local-storage/ls-config';
-import { postForm, logout, renderPosts } from './home/home';
+import { postForm, logout, renderPosts, changeUserData } from './home/home';
 import { webPageLinks } from './shared/constants/location';
 import { newsHandler } from './components/news/news';
 
@@ -20,6 +20,7 @@ window.onload = () => {
       renderPosts();
       logout();
       webPageLinks();
+      changeUserData();
       break;
     case paths.sign_in:
       signInHandler();
