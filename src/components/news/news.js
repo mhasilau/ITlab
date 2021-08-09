@@ -12,7 +12,7 @@ export const newsHandler = () => {
 }
 
 export const renderPostsNews = async () => {
-  const postsBlock = document.querySelector('.renger-posts');
+  const postsBlock = document.querySelector('.render-posts');
   let users;
   let posts;
 
@@ -28,10 +28,10 @@ export const renderPostsNews = async () => {
     const infoName = document.createElement('span');
     const infoDate = document.createElement('span');
 
-    postPlace.className = 'renger-posts-post';
-    content.className = 'renger-posts-content';
-    infoName.className = 'renger-posts-info';
-    infoDate.className = 'renger-posts-info';
+    postPlace.className = 'render-posts-post';
+    content.className = 'render-posts-content';
+    infoName.className = 'render-posts-info';
+    infoDate.className = 'render-posts-info';
 
     (user.uuid !== LocalStorageClass.getUID()) ? postPlace.style.display = 'block' : postPlace.style.display = 'none';
 

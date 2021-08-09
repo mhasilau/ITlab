@@ -1,9 +1,10 @@
-.renger-posts-post {
+.render-posts-post {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
   border: 1px solid #fff;
   border-radius: 5px;
+
 }
 
 .functional-block {
@@ -26,6 +27,13 @@
     width: 20px;
     border: none;
     background-repeat: no-repeat;
+  }
 
+  .save {
+    background-image: url('../assets/ico/save.svg');
+    height: 20px;
+    width: 20px;
+    border: none;
+    background-repeat: no-repeat;
   }
 }
