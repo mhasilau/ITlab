@@ -72,15 +72,13 @@ export const renderPosts = async () => {
       postPlace.style.display = 'none';
     }
 
-    const detelePost = (id) => {
+    const deletePost = (id) => {
       postPlace.remove();
       axios.delete(`${databaseURL}/posts/${id}.json`)
         .then(window.location.reload());
     }
 
-    deleteBnt.onclick = () => {
-      detelePost(post.id);
-    }
+    deleteBnt.onclick = () => deletePost(post.id);
 
     const editPost = (post) => {
       content.style.display = 'none';
@@ -89,23 +87,18 @@ export const renderPosts = async () => {
       editContent.innerText = post.content;
     }
 
-    saveBtn.onclick = () => {
-      savePost(post);
-    }
+    saveBtn.onclick = () => savePost(post);
 
     const savePost = (post) => {
       content.style.display = 'block';
       editContent.style.display = 'none';
       saveBtn.style.display = 'none';
-      console.log(post);
       post.content = editContent.value;
       axios.put(`${databaseURL}/posts/${post.id}.json`, post)
         .then(window.location.reload());
     }
 
-    editBnt.onclick = () => {
-      editPost(post);
-    }
+    editBnt.onclick = () => editPost(post);
 
     content.innerHTML = post.content;
     infoName.innerHTML = `${post.username},  `;
