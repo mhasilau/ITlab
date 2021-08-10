@@ -24,7 +24,7 @@ export const postForm = () => {
     post.content = post_content.value;
     createPost(post);
     post_content.value = null;
-    window.location.reload();
+    renderPosts();
   });
 }
 
@@ -73,10 +73,10 @@ export const renderPosts = async () => {
       postPlace.style.display = 'none';
     }
 
-    const deletePost = (id) => {
-      axios.delete(`${databaseURL}/posts/${id}.json`);
+    const deletePost = async (id) => {
+      await axios.delete(`${databaseURL}/posts/${id}.json`);
       postPlace.remove();
-      window.location.reload();
+      renderPosts();
     }
 
     deleteBnt.onclick = () => deletePost(post.id);
@@ -90,14 +90,14 @@ export const renderPosts = async () => {
 
     saveBtn.onclick = () => savePost(post);
 
-    const savePost = (post) => {
+    const savePost =  (post) => {
       content.style.display = 'block';
       editContent.style.display = 'none';
       saveBtn.style.display = 'none';
       post.content = editContent.value;
       axios.put(`${databaseURL}/posts/${post.id}.json`, post)
+        .then( () => renderPosts())
         .catch( error => showErrorNotification(error));
-      window.location.reload();
     }
 
     editBnt.onclick = () => editPost(post);
@@ -156,19 +156,27 @@ export const changeUserData = () => {
       id: id,
       uuid: uuid
     }
-    
-    save_info.onclick = () => {
-      saveInfo(userUpd);
-      save_info.style.display = 'none';
-      change_info.style.display = 'block';
-    }
 
     const saveInfo = async (user) => {
-      axios.put(`${databaseURL}/users/${user.id}.json`, user)
+      await axios.put(`${databaseURL}/users/${user.id}.json`, user)
       .then(() => {
         LocalStorageClass.setUserData(user);
       })
-      .catch( error => showErrorNotification(error));;
+      .catch( error => showErrorNotification(error));
+    }
+
+    save_info.onclick = async () => {
+      await saveInfo(userUpd)
+        .then( () => {
+          save_info.style.display = 'none';
+          change_info.style.display = 'block';
+          usernameInp.setAttribute('disabled', true);
+          countryInp.setAttribute('disabled', true);
+          birthInp.setAttribute('disabled', true);
+          linledinInp.setAttribute('disabled', true);
+          githubInp.setAttribute('disabled', true);
+        });
+
     }
   }
 }
