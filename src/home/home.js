@@ -2,11 +2,10 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers } from '../api/api-handlers';
+import { createPost, getPosts, getUsers, loadPhoto, updAvatar } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
-
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -42,6 +41,8 @@ export const renderPosts = async () => {
   let posts;
 
   postsBlock.innerHTML = null;
+
+  updAvatar();
 
   await getPosts().then( response => posts = response );
   await getUsers().then( response => users = response );
@@ -120,48 +121,46 @@ export const changeUserData = () => {
   const usernameInp = document.getElementById('username');
   const countryInp = document.getElementById('country');
   const birthInp = document.getElementById('birth');
-  const linledinInp = document.getElementById('linledin');
+  const linkedinInp = document.getElementById('linkedin');
   const githubInp = document.getElementById('github');
+  const avatar = document.getElementById('file');
 
   usernameInp.value = username;
   countryInp.value = country;
   birthInp.value = birth;
-  linledinInp.value = linkedin;
+  linkedinInp.value = linkedin;
   githubInp.value = github;
 
   save_info.style.display = 'none';
   usernameInp.setAttribute('disabled', true);
   countryInp.setAttribute('disabled', true);
   birthInp.setAttribute('disabled', true);
-  linledinInp.setAttribute('disabled', true);
+  linkedinInp.setAttribute('disabled', true);
   githubInp.setAttribute('disabled', true);
 
   change_info.onclick = () => {
-    save_info.style.display = 'block';
-    change_info.style.display = 'none';
-
-
-    usernameInp.removeAttribute('disabled');
-    countryInp.removeAttribute('disabled');
-    birthInp.removeAttribute('disabled');
-    linledinInp.removeAttribute('disabled');
-    githubInp.removeAttribute('disabled');
-
     const userUpd = {
       username: usernameInp.value,
       country: countryInp.value,
       birth: birthInp.value,
-      linkedin: linledinInp.value,
+      linkedin: linkedinInp.value,
       github: githubInp.value,
       id: id,
       uuid: uuid
     }
 
+    save_info.style.display = 'block';
+    change_info.style.display = 'none';
+
+    usernameInp.removeAttribute('disabled');
+    countryInp.removeAttribute('disabled');
+    birthInp.removeAttribute('disabled');
+    linkedinInp.removeAttribute('disabled');
+    githubInp.removeAttribute('disabled');
+
     const saveInfo = async (user) => {
       await axios.put(`${databaseURL}/users/${user.id}.json`, user)
-      .then(() => {
-        LocalStorageClass.setUserData(user);
-      })
+      .then(() => LocalStorageClass.setUserData(user))
       .catch( error => showErrorNotification(error));
     }
 
@@ -173,10 +172,17 @@ export const changeUserData = () => {
           usernameInp.setAttribute('disabled', true);
           countryInp.setAttribute('disabled', true);
           birthInp.setAttribute('disabled', true);
-          linledinInp.setAttribute('disabled', true);
+          linkedinInp.setAttribute('disabled', true);
           githubInp.setAttribute('disabled', true);
         });
-
     }
+  }
+
+  avatar.oninput = async event => {
+      const avaName = document.getElementById('file').value;
+      await loadPhoto(event, avaName);
+      await updAvatar();
+
+
   }
 }

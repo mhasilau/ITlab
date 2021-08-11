@@ -22,10 +22,11 @@
     }
 
     &-photo {
-      width: 10vw;
-      img {
-        width: 100%;
-      }
+      width: 150px;
+      height: 200px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
     }
   }
 

@@ -1,6 +1,7 @@
 require('firebase/app');
 
 import firebase from 'firebase/app';
+import 'firebase/storage';
 import axios from 'axios';
 
 import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
@@ -124,6 +125,35 @@ export const getUsers = () => {
         return Object.keys(response.data).map( key => ({...response.data[key], id: key}));
       }
     });
+}
+
+export const loadPhoto = async (event, avaName) => {
+  const user = LocalStorageClass.getUserData();
+
+  await firebase
+    .storage()
+    .ref(`img/${avaName}`)
+    .put(event.target.files[0])
+    .catch( error => showErrorNotification(error));
+
+  await firebase
+    .storage()
+    .ref(`img/${avaName}`)
+    .getDownloadURL()
+    .then( url => user.ava = url )
+    .catch( error => showErrorNotification(error));
+
+  await updUser(user);
+}
+
+export const updUser = async (user) => {
+  return axios.put(`${databaseURL}/users/${user.id}.json`, user)
+  .then( () => LocalStorageClass.setUserData(user));
+}
+
+export const updAvatar = () => {
+  const userAvatar = document.querySelector('.main-content-user-photo');
+  userAvatar.style.backgroundImage = `url('${LocalStorageClass.getUserData().ava}')`;
 }
 
 initApi();
