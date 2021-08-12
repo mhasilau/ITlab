@@ -25,7 +25,9 @@ export const signInHandler = () => {
   const signInEmailInput = document.getElementById('email');
   const signInPasswordInput = document.getElementById('password');
   const signInBtn = document.getElementById('submitBtn');
-
+  const loader = document.querySelector('.cssload-loading');
+  
+  loader.style.display = 'none';
   helpMessageEmail.style.display = 'none';
   helpMessagePassword.style.display = 'none';
 

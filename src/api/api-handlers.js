@@ -15,6 +15,8 @@ export const initApi = () => {
 }
 
 export const signIn = (email, password) => {
+  awaiting();
+
   return axios.post(authURL, {
     email,
     password,
@@ -25,7 +27,10 @@ export const signIn = (email, password) => {
         const { idToken: token, localId } = response.data;
         LocalStorageClass.setToken(token);
         LocalStorageClass.setUID(localId);
-        getUser().then( () => window.location.href = routes.home);
+        getUser().then( () => {
+          stopAwaiting();
+          window.location.href = routes.home;
+        } );
       }
     })
     .catch (error => showErrorNotification(error));
@@ -43,18 +48,23 @@ export const getUser = () => {
 }
 
 export const signUp = async user => {
-  const loader = document.querySelector('.cssload-loading');
-  loader.style.display = 'none';
-
+  // const loader = document.querySelector('.cssload-loading');
   const { password, email } = user;
+
+  // loader.style.display = 'none';
+
+  // awaiting();
 
   try {
     await awaiting();
     await createAuthData(email, password);
     await createUser(user).then( response => LocalStorageClass.setUserId(response.data.name));
+    await createUser(user).then( response => console.log(response));
+
     await signIn(email, password);
     stopAwaiting();
   } catch (error) {
+    stopAwaiting();
     showErrorNotification(error);
   }
 }
@@ -71,6 +81,8 @@ export const createAuthData = (email, password) => {
 
 export const createPost = post => {
   const { userId, username, date, content } = post;
+
+  awaiting();
   return fetch(`${databaseURL}/posts.json`,
   {
       method: 'POST',
@@ -83,10 +95,16 @@ export const createPost = post => {
           date,
           content
       })
+  })
+  .then( () => stopAwaiting())
+  .catch( error => {
+    stopAwaiting();
+    showErrorNotification(error);
   });
 }
 
 export const getPosts = () => {
+  awaiting();
   return fetch(`${databaseURL}/posts.json`,
   {
     method: 'GET',
@@ -100,12 +118,18 @@ export const getPosts = () => {
           ...result[key],
           id: key
       }));
+      stopAwaiting();
       return gettingKeysFromObj;
+  })
+  .catch( error => {
+    stopAwaiting();
+    showErrorNotification(error);
   });
 }
 
 export const createUser =  user  => {
   const { username, email, country, birth, linkedin, github } = user;
+  awaiting();
 
   return axios.post(`${databaseURL}/users.json`, {
     username,
@@ -115,6 +139,10 @@ export const createUser =  user  => {
     birth,
     linkedin,
     github
+  })
+  .catch( error => {
+    stopAwaiting();
+    showErrorNotification(error);
   });
 }
 
@@ -129,21 +157,37 @@ export const getUsers = () => {
 
 export const loadPhoto = async (event, avaName) => {
   const user = LocalStorageClass.getUserData();
+  awaiting();
 
   await firebase
     .storage()
     .ref(`img/${avaName}`)
     .put(event.target.files[0])
-    .catch( error => showErrorNotification(error));
+    .catch( error => {
+      stopAwaiting();
+      showErrorNotification(error);
+    });
 
   await firebase
     .storage()
     .ref(`img/${avaName}`)
     .getDownloadURL()
     .then( url => user.ava = url )
-    .catch( error => showErrorNotification(error));
+    .catch( error => {
+      stopAwaiting();
+      showErrorNotification(error);
+    });
 
-  await updUser(user);
+  await updUser(user)
+  .then( () => updAvatar())
+  .catch( error => {
+    stopAwaiting();
+    showErrorNotification(error);
+  });
+
+  setTimeout(() => {
+    stopAwaiting();
+  }, 1000);
 }
 
 export const updUser = async (user) => {

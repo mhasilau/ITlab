@@ -2,7 +2,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers, loadPhoto, updAvatar } from '../api/api-handlers';
+import { createPost, getPosts, getUsers, loadPhoto, updAvatar, deleteAva } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
@@ -124,6 +124,7 @@ export const changeUserData = () => {
   const linkedinInp = document.getElementById('linkedin');
   const githubInp = document.getElementById('github');
   const avatar = document.getElementById('file');
+  const deleteAvatar = document.getElementById('delAvatar');
 
   usernameInp.value = username;
   countryInp.value = country;
@@ -132,11 +133,16 @@ export const changeUserData = () => {
   githubInp.value = github;
 
   save_info.style.display = 'none';
+  
   usernameInp.setAttribute('disabled', true);
   countryInp.setAttribute('disabled', true);
   birthInp.setAttribute('disabled', true);
   linkedinInp.setAttribute('disabled', true);
   githubInp.setAttribute('disabled', true);
+
+  if (LocalStorageClass.getUserData().ava) {
+    deleteAvatar.style.display = 'block';
+  } else deleteAvatar.style.display = 'none';
 
   change_info.onclick = () => {
     const userUpd = {
@@ -164,8 +170,8 @@ export const changeUserData = () => {
       .catch( error => showErrorNotification(error));
     }
 
-    save_info.onclick = async () => {
-      await saveInfo(userUpd)
+    save_info.onclick = () => {
+      saveInfo(userUpd)
         .then( () => {
           save_info.style.display = 'none';
           change_info.style.display = 'block';
@@ -181,8 +187,6 @@ export const changeUserData = () => {
   avatar.oninput = async event => {
       const avaName = document.getElementById('file').value;
       await loadPhoto(event, avaName);
-      await updAvatar();
-
-
+      updAvatar();
   }
 }
