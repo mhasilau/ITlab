@@ -23,8 +23,9 @@
 
     &-photo {
       width: 150px;
-      height: 200px;
-      background-size: contain;
+      height: 150px;
+      border-radius: 50%;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }

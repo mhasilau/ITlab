@@ -1,8 +1,6 @@
 import { signUp } from "../../api/api-handlers";
-import { LocalStorageClass } from "../../shared/local-storage/ls-config";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
-import { routes, paths } from '../../shared/constants/routes';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
