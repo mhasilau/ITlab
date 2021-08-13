@@ -1,6 +1,7 @@
 import { signUp } from "../../api/api-handlers";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
+import { noAvatarURL } from '../../api/api-config';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');

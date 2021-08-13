@@ -2,10 +2,11 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers, loadPhoto, updAvatar, deleteAva } from '../api/api-handlers';
+import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
-import { databaseURL } from '../api/api-config';
+import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
+import { list } from './countryList';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -114,7 +115,7 @@ export const renderPosts = async () => {
 }
 
 export const changeUserData = () => {
-  const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
+  const {username, country, birth, linkedin, github, id, uuid, ava } = LocalStorageClass.getUserData();
 
   const change_info = document.getElementById('change-info');
   const save_info = document.getElementById('save-info');
@@ -140,7 +141,7 @@ export const changeUserData = () => {
   linkedinInp.setAttribute('disabled', true);
   githubInp.setAttribute('disabled', true);
 
-  if (LocalStorageClass.getUserData().ava) {
+  if (LocalStorageClass.getUserData().ava != noAvatarURL) {
     deleteAvatar.style.display = 'block';
   } else deleteAvatar.style.display = 'none';
 
@@ -152,7 +153,8 @@ export const changeUserData = () => {
       linkedin: linkedinInp.value,
       github: githubInp.value,
       id: id,
-      uuid: uuid
+      uuid: uuid,
+      ava: ava
     }
 
     save_info.style.display = 'block';
@@ -188,5 +190,25 @@ export const changeUserData = () => {
       const avaName = document.getElementById('file').value;
       await loadPhoto(event, avaName);
       updAvatar();
+      deleteAvatar.style.display = 'block';
+  }
+
+  deleteAvatar.onclick = async () => {
+    const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
+    const noAvaUser = {
+      username,
+      country,
+      birth,
+      linkedin,
+      github,
+      id,
+      uuid,
+      ava: noAvatarURL
+    }
+
+    deleteAvatar.style.display = 'none';
+
+    await updUser(noAvaUser);
+    await updAvatar();
   }
 }

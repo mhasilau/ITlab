@@ -11,3 +11,5 @@ export const FIREBASE_CONFIG = {
 export const databaseURL = 'https://itlab-cfdd4-default-rtdb.firebaseio.com';
 
 export const authURL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_CONFIG.apiKey}`;
+
+export const noAvatarURL = `https://firebasestorage.googleapis.com/v0/b/itlab-cfdd4.appspot.com/o/img%2FC%3A%5Cfakepath%5C5eae5104f379baa355e031fa1ded886c.jpg?alt=media&token=176c0b17-0e4e-4339-ae3c-8b9fa945c950`;

@@ -34,8 +34,4 @@ export class LocalStorageClass {
   static setUserId(id) {
     localStorage.setItem('userId', id);
   }
-
-  static deleteAvatar() {
-    localStorage.removeItem('userData');
-  }
 }
