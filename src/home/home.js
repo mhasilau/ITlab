@@ -6,7 +6,7 @@ import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser } from '.
 import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
-import { list } from './countryList';
+import { lists } from './countryList';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -127,6 +127,10 @@ export const changeUserData = () => {
   const avatar = document.getElementById('file');
   const deleteAvatar = document.getElementById('delAvatar');
 
+
+  // countryInp.onclick = () => lists();
+
+
   usernameInp.value = username;
   countryInp.value = country;
   birthInp.value = birth;
@@ -159,6 +163,8 @@ export const changeUserData = () => {
 
     save_info.style.display = 'block';
     change_info.style.display = 'none';
+    
+    lists();
 
     usernameInp.removeAttribute('disabled');
     countryInp.removeAttribute('disabled');
