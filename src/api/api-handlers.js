@@ -54,8 +54,6 @@ export const signUp = async user => {
     await awaiting();
     await createAuthData(email, password);
     await createUser(user).then( response => LocalStorageClass.setUserId(response.data.name));
-    await createUser(user).then( response => console.log(response));
-
     await signIn(email, password);
     stopAwaiting();
   } catch (error) {
