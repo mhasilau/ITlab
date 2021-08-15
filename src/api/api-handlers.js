@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import axios from 'axios';
 
-import { FIREBASE_CONFIG, databaseURL, authURL } from './api-config';
+import { FIREBASE_CONFIG, databaseURL, authURL, noAvatarURL } from './api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { routes } from '../shared/constants/routes';
@@ -48,19 +48,12 @@ export const getUser = () => {
 }
 
 export const signUp = async user => {
-  // const loader = document.querySelector('.cssload-loading');
   const { password, email } = user;
-
-  // loader.style.display = 'none';
-
-  // awaiting();
 
   try {
     await awaiting();
     await createAuthData(email, password);
     await createUser(user).then( response => LocalStorageClass.setUserId(response.data.name));
-    await createUser(user).then( response => console.log(response));
-
     await signIn(email, password);
     stopAwaiting();
   } catch (error) {
@@ -138,7 +131,8 @@ export const createUser =  user  => {
     country,
     birth,
     linkedin,
-    github
+    github,
+    ava: `${noAvatarURL}`
   })
   .catch( error => {
     stopAwaiting();
