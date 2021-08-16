@@ -127,10 +127,6 @@ export const changeUserData = () => {
   const avatar = document.getElementById('file');
   const deleteAvatar = document.getElementById('delAvatar');
 
-
-  // countryInp.onclick = () => lists();
-
-
   usernameInp.value = username;
   countryInp.value = country;
   birthInp.value = birth;
@@ -138,7 +134,7 @@ export const changeUserData = () => {
   githubInp.value = github;
 
   save_info.style.display = 'none';
-  
+
   usernameInp.setAttribute('disabled', true);
   countryInp.setAttribute('disabled', true);
   birthInp.setAttribute('disabled', true);
@@ -163,7 +159,7 @@ export const changeUserData = () => {
 
     save_info.style.display = 'block';
     change_info.style.display = 'none';
-    
+
     lists();
 
     usernameInp.removeAttribute('disabled');
@@ -176,10 +172,11 @@ export const changeUserData = () => {
       await axios.put(`${databaseURL}/users/${user.id}.json`, user)
       .then(() => LocalStorageClass.setUserData(user))
       .catch( error => showErrorNotification(error));
+      //fix it
     }
 
-    save_info.onclick = () => {
-      saveInfo(userUpd)
+    save_info.onclick = async () => {
+      await saveInfo(userUpd)
         .then( () => {
           save_info.style.display = 'none';
           change_info.style.display = 'block';
