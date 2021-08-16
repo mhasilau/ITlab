@@ -31,6 +31,7 @@
         </div>
         <div class="main-content-user">
           <div class="main-content-user-photo">
+            <img src="./assets/ico/delete.svg" alt="" id="delAvatar">
           </div>
           <div class="main-content-user-change-photo">
             <input type="button" id="change-avatar" value="Change avatar" onclick="document.getElementById('file').click();" />
@@ -50,7 +51,8 @@
             </div>
             <div class="user-info-input">
               <div class="forWat"><span>Country</span></div>
-              <div class="wat"><input type="text" id="country" placeholder="Choose country"></div>
+              <!-- <div class="wat"><input type="text" id="country" placeholder="Choose country"></div> -->
+              <div class="wat"><select id="country" placeholder="Choose country"></select> </div>
             </div>
             <div class="user-info-input">
               <div class="forWat"><span>Birth</span></div>
@@ -81,6 +83,31 @@
     </div>
     <div class="info-message">
       <p class="show-info-message"></p>
+    </div>
+    <div class="cssload-loading">
+      <div class="cssload-finger cssload-finger-1">
+        <div class="cssload-finger-item">
+          <span></span><i></i>
+        </div>
+      </div>
+      <div class="cssload-finger cssload-finger-2">
+        <div class="cssload-finger-item">
+          <span></span><i></i>
+        </div>
+      </div>
+      <div class="cssload-finger cssload-finger-3">
+        <div class="cssload-finger-item">
+          <span></span><i></i>
+        </div>
+      </div>
+      <div class="cssload-finger cssload-finger-4">
+        <div class="cssload-finger-item">
+          <span></span><i></i>
+        </div>
+      </div>
+      <div class="cssload-last-finger">
+        <div class="cssload-last-finger-item"><i></i></div>
+      </div>
     </div>
   </body>
 </html>

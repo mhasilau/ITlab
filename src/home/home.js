@@ -2,10 +2,11 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers, loadPhoto, updAvatar } from '../api/api-handlers';
+import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
-import { databaseURL } from '../api/api-config';
+import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
+import { lists } from './countryList';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -114,7 +115,7 @@ export const renderPosts = async () => {
 }
 
 export const changeUserData = () => {
-  const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
+  const {username, country, birth, linkedin, github, id, uuid, ava } = LocalStorageClass.getUserData();
 
   const change_info = document.getElementById('change-info');
   const save_info = document.getElementById('save-info');
@@ -124,6 +125,7 @@ export const changeUserData = () => {
   const linkedinInp = document.getElementById('linkedin');
   const githubInp = document.getElementById('github');
   const avatar = document.getElementById('file');
+  const deleteAvatar = document.getElementById('delAvatar');
 
   usernameInp.value = username;
   countryInp.value = country;
@@ -132,11 +134,16 @@ export const changeUserData = () => {
   githubInp.value = github;
 
   save_info.style.display = 'none';
+
   usernameInp.setAttribute('disabled', true);
   countryInp.setAttribute('disabled', true);
   birthInp.setAttribute('disabled', true);
   linkedinInp.setAttribute('disabled', true);
   githubInp.setAttribute('disabled', true);
+
+  if (LocalStorageClass.getUserData().ava != noAvatarURL) {
+    deleteAvatar.style.display = 'block';
+  } else deleteAvatar.style.display = 'none';
 
   change_info.onclick = () => {
     const userUpd = {
@@ -146,11 +153,14 @@ export const changeUserData = () => {
       linkedin: linkedinInp.value,
       github: githubInp.value,
       id: id,
-      uuid: uuid
+      uuid: uuid,
+      ava: ava
     }
 
     save_info.style.display = 'block';
     change_info.style.display = 'none';
+
+    lists();
 
     usernameInp.removeAttribute('disabled');
     countryInp.removeAttribute('disabled');
@@ -162,6 +172,7 @@ export const changeUserData = () => {
       await axios.put(`${databaseURL}/users/${user.id}.json`, user)
       .then(() => LocalStorageClass.setUserData(user))
       .catch( error => showErrorNotification(error));
+      //fix it
     }
 
     save_info.onclick = async () => {
@@ -181,8 +192,26 @@ export const changeUserData = () => {
   avatar.oninput = async event => {
       const avaName = document.getElementById('file').value;
       await loadPhoto(event, avaName);
-      await updAvatar();
+      updAvatar();
+      deleteAvatar.style.display = 'block';
+  }
 
+  deleteAvatar.onclick = async () => {
+    const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
+    const noAvaUser = {
+      username,
+      country,
+      birth,
+      linkedin,
+      github,
+      id,
+      uuid,
+      ava: noAvatarURL
+    }
 
+    deleteAvatar.style.display = 'none';
+
+    await updUser(noAvaUser);
+    await updAvatar();
   }
 }
