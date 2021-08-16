@@ -6,7 +6,7 @@ import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser } from '.
 import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
-import { list } from './countryList';
+import { lists } from './countryList';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -134,7 +134,7 @@ export const changeUserData = () => {
   githubInp.value = github;
 
   save_info.style.display = 'none';
-  
+
   usernameInp.setAttribute('disabled', true);
   countryInp.setAttribute('disabled', true);
   birthInp.setAttribute('disabled', true);
@@ -160,6 +160,8 @@ export const changeUserData = () => {
     save_info.style.display = 'block';
     change_info.style.display = 'none';
 
+    lists();
+
     usernameInp.removeAttribute('disabled');
     countryInp.removeAttribute('disabled');
     birthInp.removeAttribute('disabled');
@@ -170,10 +172,11 @@ export const changeUserData = () => {
       await axios.put(`${databaseURL}/users/${user.id}.json`, user)
       .then(() => LocalStorageClass.setUserData(user))
       .catch( error => showErrorNotification(error));
+      //fix it
     }
 
-    save_info.onclick = () => {
-      saveInfo(userUpd)
+    save_info.onclick = async () => {
+      await saveInfo(userUpd)
         .then( () => {
           save_info.style.display = 'none';
           change_info.style.display = 'block';
