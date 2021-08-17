@@ -1,4 +1,4 @@
-export const userNameValid = /^[a-z0-9_-]{4,29}$/i;
+export const userNameValid = /^([a-z]+\s)*[a-z]{4,29}$/i;
 
 export const userEmailValid = /^[a-zа-я0-9.\-_+]+@[a-zа-я0-9\-_+]+\.[a-zа-я]{2,6}$/i;
 
