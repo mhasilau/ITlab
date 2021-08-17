@@ -2,7 +2,7 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser } from '../api/api-handlers';
+import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser, saveInfo } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
@@ -126,6 +126,7 @@ export const changeUserData = () => {
   const githubInp = document.getElementById('github');
   const avatar = document.getElementById('file');
   const deleteAvatar = document.getElementById('delAvatar');
+  const userInfoBlock = document.querySelector('.user-info');
 
   usernameInp.value = username;
   countryInp.value = country;
@@ -135,57 +136,35 @@ export const changeUserData = () => {
 
   save_info.style.display = 'none';
 
-  usernameInp.setAttribute('disabled', true);
-  countryInp.setAttribute('disabled', true);
-  birthInp.setAttribute('disabled', true);
-  linkedinInp.setAttribute('disabled', true);
-  githubInp.setAttribute('disabled', true);
-
   if (LocalStorageClass.getUserData().ava != noAvatarURL) {
     deleteAvatar.style.display = 'block';
   } else deleteAvatar.style.display = 'none';
 
   change_info.onclick = () => {
-    const userUpd = {
-      username: usernameInp.value,
-      country: countryInp.value,
-      birth: birthInp.value,
-      linkedin: linkedinInp.value,
-      github: githubInp.value,
-      id: id,
-      uuid: uuid,
-      ava: ava
-    }
-
     save_info.style.display = 'block';
     change_info.style.display = 'none';
+    userInfoBlock.style.display = 'block';
 
     lists();
 
-    usernameInp.removeAttribute('disabled');
-    countryInp.removeAttribute('disabled');
-    birthInp.removeAttribute('disabled');
-    linkedinInp.removeAttribute('disabled');
-    githubInp.removeAttribute('disabled');
-
-    const saveInfo = async (user) => {
-      await axios.put(`${databaseURL}/users/${user.id}.json`, user)
-      .then(() => LocalStorageClass.setUserData(user))
-      .catch( error => showErrorNotification(error));
-      //fix it
-    }
-
     save_info.onclick = async () => {
+      const userUpd = {
+        username: usernameInp.value,
+        country: countryInp.value,
+        birth: birthInp.value,
+        linkedin: linkedinInp.value,
+        github: githubInp.value,
+        id: id,
+        uuid: uuid,
+        ava: ava
+      }
       await saveInfo(userUpd)
         .then( () => {
           save_info.style.display = 'none';
           change_info.style.display = 'block';
-          usernameInp.setAttribute('disabled', true);
-          countryInp.setAttribute('disabled', true);
-          birthInp.setAttribute('disabled', true);
-          linkedinInp.setAttribute('disabled', true);
-          githubInp.setAttribute('disabled', true);
+          userInfoBlock.style.display = 'none';
         });
+
     }
   }
 
@@ -197,7 +176,6 @@ export const changeUserData = () => {
   }
 
   deleteAvatar.onclick = async () => {
-    const {username, country, birth, linkedin, github, id, uuid } = LocalStorageClass.getUserData();
     const noAvaUser = {
       username,
       country,
