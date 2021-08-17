@@ -158,8 +158,7 @@ export const getUsers = () => {
 export const loadPhoto = async (event, avaName) => {
   const user = LocalStorageClass.getUserData();
   awaiting();
-  console.log(event.target.files[0].size);
-  if (event.target.files[0].size < 2000000) {
+  if (event.target.files[0].size < 5000000) {
     await firebase
     .storage()
     .ref(`img/${avaName}`)
