@@ -115,8 +115,13 @@ export const getPosts = () => {
       return gettingKeysFromObj;
   })
   .catch( error => {
-    stopAwaiting();
-    showErrorNotification(error);
+    if ( error == 'Cannot convert undefined or null to object') {
+        stopAwaiting();
+        showErrorNotification(error);
+    } else {
+      stopAwaiting();
+    }
+
   });
 }
 
@@ -192,6 +197,12 @@ export const updUser = async (user) => {
 export const updAvatar = () => {
   const userAvatar = document.querySelector('.main-content-user-photo');
   userAvatar.style.backgroundImage = `url('${LocalStorageClass.getUserData().ava}')`;
+}
+
+export const saveInfo = async (user) => {
+  await axios.put(`${databaseURL}/users/${user.id}.json`, user)
+  .then(() => LocalStorageClass.setUserData(user))
+  .catch( error => showErrorNotification(error));
 }
 
 initApi();
