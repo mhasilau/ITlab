@@ -35,7 +35,7 @@
           </div>
           <div class="main-content-user-change-photo">
             <input type="button" id="change-avatar" value="Change avatar" onclick="document.getElementById('file').click();" />
-            <input type="file" style="display:none;" id="file" name="file"/>
+            <input type="file" style="display:none;" id="file" name="file" accept=".png, .jpg, .jpeg, .gif, .svg"/>
           </div>
           <div class="main-content-user-change-info">
             <button id="change-info">Change info</button>
@@ -51,12 +51,11 @@
             </div>
             <div class="user-info-input">
               <div class="forWat"><span>Country</span></div>
-              <!-- <div class="wat"><input type="text" id="country" placeholder="Choose country"></div> -->
               <div class="wat"><select id="country" placeholder="Choose country"></select> </div>
             </div>
             <div class="user-info-input">
               <div class="forWat"><span>Birth</span></div>
-              <div class="wat"><input type="date" id="birth" placeholder="dd.mm.yyyy"></div>
+              <div class="wat"><input type="date" id="birth"></div>
             </div>
             <div class="user-info-input">
               <div class="forWat"><span>Linkedin</span></div>

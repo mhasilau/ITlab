@@ -5,10 +5,11 @@ import 'firebase/storage';
 import axios from 'axios';
 
 import { FIREBASE_CONFIG, databaseURL, authURL, noAvatarURL } from './api-config';
-import { showErrorNotification } from '../shared/error-handlers';
+import { showErrorNotification, errorNotification } from '../shared/error-handlers';
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
 import { routes } from '../shared/constants/routes';
 import { awaiting, stopAwaiting } from '../shared/awaiting-load';
+import { ERROR_MESSAGE } from '../shared/messages/error-messages';
 
 export const initApi = () => {
   firebase.initializeApp(FIREBASE_CONFIG);
@@ -115,8 +116,13 @@ export const getPosts = () => {
       return gettingKeysFromObj;
   })
   .catch( error => {
-    stopAwaiting();
-    showErrorNotification(error);
+    if ( error == 'Cannot convert undefined or null to object') {
+        stopAwaiting();
+        showErrorNotification(error);
+    } else {
+      stopAwaiting();
+    }
+
   });
 }
 
@@ -152,8 +158,8 @@ export const getUsers = () => {
 export const loadPhoto = async (event, avaName) => {
   const user = LocalStorageClass.getUserData();
   awaiting();
-
-  await firebase
+  if (event.target.files[0].size > 150000 && event.target.files[0].size < 5000000) {
+    await firebase
     .storage()
     .ref(`img/${avaName}`)
     .put(event.target.files[0])
@@ -162,26 +168,31 @@ export const loadPhoto = async (event, avaName) => {
       showErrorNotification(error);
     });
 
-  await firebase
-    .storage()
-    .ref(`img/${avaName}`)
-    .getDownloadURL()
-    .then( url => user.ava = url )
+    await firebase
+      .storage()
+      .ref(`img/${avaName}`)
+      .getDownloadURL()
+      .then( url => user.ava = url )
+      .catch( error => {
+        stopAwaiting();
+        showErrorNotification(error);
+      });
+
+    await updUser(user)
+    .then( () => updAvatar())
     .catch( error => {
       stopAwaiting();
       showErrorNotification(error);
     });
 
-  await updUser(user)
-  .then( () => updAvatar())
-  .catch( error => {
-    stopAwaiting();
-    showErrorNotification(error);
-  });
+    setTimeout(() => {
+      stopAwaiting();
+    }, 1000);
 
-  setTimeout(() => {
+  } else {
+    errorNotification(ERROR_MESSAGE.errorSize);
     stopAwaiting();
-  }, 1000);
+  }
 }
 
 export const updUser = async (user) => {
@@ -192,6 +203,12 @@ export const updUser = async (user) => {
 export const updAvatar = () => {
   const userAvatar = document.querySelector('.main-content-user-photo');
   userAvatar.style.backgroundImage = `url('${LocalStorageClass.getUserData().ava}')`;
+}
+
+export const saveInfo = async (user) => {
+  await axios.put(`${databaseURL}/users/${user.id}.json`, user)
+  .then(() => LocalStorageClass.setUserData(user))
+  .catch( error => showErrorNotification(error));
 }
 
 initApi();
