@@ -1,7 +1,6 @@
 import { signUp } from "../../api/api-handlers";
 import { INFO_MESSAGE } from '../../shared/messages/info-message';
 import { passwordPower, nameValidator, emailValidator } from '../../shared/validators';
-import { noAvatarURL } from '../../api/api-config';
 
 const messageBlock = document.querySelector('.info-message');
 const messageText = document.querySelector('.show-info-message');
@@ -69,11 +68,13 @@ export const signUpHandler = () => {
   userNickname.oninput = () => {
     nameValidator(userNickname.value) ? inputForm.userName.isValid = true : inputForm.userName.isValid = false;
     if (inputForm.userName.isValid) {
-      userNickname.classList.add('green');
       helpMessageUser.style.display = 'none';
+      userNickname.classList.remove('red');
+      userNickname.classList.add('green');
     } else {
-      userNickname.classList.add('red');
       helpMessageUser.style.display = 'block';
+      userNickname.classList.remove('green');
+      userNickname.classList.add('red');
     }
     checkFormValid();
   }
@@ -82,9 +83,11 @@ export const signUpHandler = () => {
     emailValidator(userEmail.value) ? inputForm.email.isValid = true : inputForm.email.isValid = false;
     if (inputForm.email.isValid) {
       userEmail.classList.add('green');
+      userEmail.classList.remove('red');
       helpMessageEmail.style.display = 'none';
     } else {
       userEmail.classList.add('red');
+      userEmail.classList.remove('green');
       helpMessageEmail.style.display = 'block';
     }
     checkFormValid();
@@ -165,3 +168,4 @@ export const showMessageBoardUp = () => {
     message();
   }
 }
+

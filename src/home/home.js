@@ -16,6 +16,8 @@ import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
 import { lists } from './countryList';
+import { nameValidator, linkLinkedinValidator, linkGitValidator } from '../shared/validators';
+
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -136,21 +138,77 @@ export const changeUserData = () => {
   const avatar = document.getElementById('file');
   const deleteAvatar = document.getElementById('delAvatar');
   const userInfoBlock = document.querySelector('.user-info');
+  const messageBlock = document.querySelector('.info-message');
+  const helpMessageUser = document.getElementById('usernameError');
+  const helpMessageBirth = document.getElementById('birthError');
+  const helpMessageLinkedin = document.getElementById('linkedinError');
+  const helpMessageGithub = document.getElementById('githubError');
+
+
+  helpMessageUser.style.display = 'none';
+  helpMessageBirth.style.display = 'none';
+  helpMessageLinkedin.style.display = 'none';
+  helpMessageGithub.style.display = 'none';
+
+  helpMessageUser.innerText = 'Incorrect username';
+  helpMessageBirth.innerText = 'Incorrect birth date.';
+  helpMessageLinkedin.innerText = 'Incorrect url';
+  helpMessageGithub.innerText = 'Incorrect url';
+
+  let usernameCounter;
+  let birthCounter;
+  let linkedinCounter;
+  let githubCounter;
 
   usernameInp.oninput = () => {
     LocalStorageClass.setUsername(usernameInp.value);
+    if (nameValidator(usernameInp.value)) {
+      helpMessageUser.style.display = 'none';
+      usernameCounter = 1;
+    } else {
+      helpMessageUser.style.display = 'block';
+      usernameCounter = 0;
+    }
   }
 
   birthInp.oninput = () => {
+    let birth;
+    birth = Number(birthInp.value.split('-')[0]);
+    const year = moment().format();
     LocalStorageClass.setBirth(birthInp.value);
+
+    if (Number(year.split('-')[0]) - birth >= 0) {
+      helpMessageBirth.style.display = 'none';
+      birthCounter = 1;
+    } else {
+      helpMessageBirth.style.display = 'block';
+      birthCounter = 0;
+    }
   }
 
   linkedinInp.oninput = () => {
     LocalStorageClass.setLinkedIn(linkedinInp.value);
+    if (linkLinkedinValidator(linkedinInp.value)) {
+      helpMessageLinkedin.style.display = 'none';
+      linkedinCounter = 1;
+    } else {
+      helpMessageLinkedin.style.display = 'block';
+      linkedinCounter = 0;
+    }
   }
 
   githubInp.oninput = () => {
     LocalStorageClass.setGithub(githubInp.value);
+    if (linkGitValidator(githubInp.value)) {
+      helpMessageGithub.style.display = 'none';
+      githubCounter = 1;
+      console.log('githubCounter', githubCounter);
+    } else {
+      helpMessageGithub.style.display = 'block';
+      githubCounter = 0;
+      console.log('githubCounter', githubCounter);
+
+    }
   }
 
   usernameInp.value = LocalStorageClass.getUsername();
