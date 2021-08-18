@@ -2,7 +2,16 @@ import moment from 'moment';
 import axios from 'axios';
 
 import { LocalStorageClass } from '../shared/local-storage/ls-config';
-import { createPost, getPosts, getUsers, loadPhoto, updAvatar, updUser, saveInfo } from '../api/api-handlers';
+import { 
+  createPost,
+  getPosts,
+  getUsers,
+  loadPhoto,
+  updAvatar,
+  updUser,
+  saveInfo,
+  deleteUserDataLS
+} from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification } from '../shared/error-handlers';
@@ -128,11 +137,28 @@ export const changeUserData = () => {
   const deleteAvatar = document.getElementById('delAvatar');
   const userInfoBlock = document.querySelector('.user-info');
 
-  usernameInp.value = username;
+  usernameInp.oninput = () => {
+    LocalStorageClass.setUsername(usernameInp.value);
+  }
+
+  birthInp.oninput = () => {
+    LocalStorageClass.setBirth(birthInp.value);
+  }
+
+  linkedinInp.oninput = () => {
+    LocalStorageClass.setLinkedIn(linkedinInp.value);
+  }
+
+  githubInp.oninput = () => {
+    LocalStorageClass.setGithub(githubInp.value);
+  }
+
+  usernameInp.value = LocalStorageClass.getUsername();
   countryInp.value = country;
-  birthInp.value = birth;
-  linkedinInp.value = linkedin;
-  githubInp.value = github;
+  birthInp.value = LocalStorageClass.getBirth();
+  linkedinInp.value = LocalStorageClass.getLinkedIn();
+  githubInp.value = LocalStorageClass.getGithub();
+
 
   save_info.style.display = 'none';
 
@@ -146,27 +172,28 @@ export const changeUserData = () => {
     userInfoBlock.style.display = 'block';
 
     lists();
-
-    save_info.onclick = async () => {
-      const userUpd = {
-        username: usernameInp.value,
-        country: countryInp.value,
-        birth: birthInp.value,
-        linkedin: linkedinInp.value,
-        github: githubInp.value,
-        id: id,
-        uuid: uuid,
-        ava: ava
-      }
-      await saveInfo(userUpd)
-        .then( () => {
-          save_info.style.display = 'none';
-          change_info.style.display = 'block';
-          userInfoBlock.style.display = 'none';
-        });
-
-    }
   }
+
+  save_info.onclick = async () => {
+    const userUpd = {
+      username: usernameInp.value,
+      country: countryInp.value,
+      birth: birthInp.value,
+      linkedin: linkedinInp.value,
+      github: githubInp.value,
+      id: id,
+      uuid: uuid,
+      ava: ava
+    }
+    await saveInfo(userUpd)
+      .then( () => {
+        save_info.style.display = 'none';
+        change_info.style.display = 'block';
+        userInfoBlock.style.display = 'none';
+      });
+    await deleteUserDataLS();
+  }
+  
 
   avatar.oninput = async event => {
       const avaName = document.getElementById('file').value;
