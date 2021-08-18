@@ -211,4 +211,11 @@ export const saveInfo = async (user) => {
   .catch( error => showErrorNotification(error));
 }
 
+export const deleteUserDataLS = () => {
+  localStorage.removeItem('username');
+  localStorage.removeItem('birth');
+  localStorage.removeItem('linkedin');
+  localStorage.removeItem('github');
+}
+
 initApi();

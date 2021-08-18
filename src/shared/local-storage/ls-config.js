@@ -34,4 +34,36 @@ export class LocalStorageClass {
   static setUserId(id) {
     localStorage.setItem('userId', id);
   }
+
+  static getUsername() {
+    return localStorage.getItem('username');
+  }
+
+  static setUsername(username) {
+    localStorage.setItem('username', username);
+  }
+
+  static getBirth() {
+    return localStorage.getItem('birth');
+  }
+
+  static setBirth(birth) {
+    localStorage.setItem('birth', birth);
+  }
+
+  static getLinkedIn() {
+    return localStorage.getItem('linkedin');
+  }
+
+  static setLinkedIn(linkedin) {
+    localStorage.setItem('linkedin', linkedin);
+  }
+
+  static getGithub() {
+    return localStorage.getItem('github');
+  }
+
+  static setGithub(github) {
+    localStorage.setItem('github', github);
+  }
 }
