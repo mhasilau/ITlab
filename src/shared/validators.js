@@ -15,8 +15,10 @@ const userEmailCheck = userEmail => userEmailValid.test(userEmail);
 const lowerCaseCheck = password => userPasswordLowerCaseValid.test(password);
 const numberCheck = password => userPasswordNumbersValid.test(password);
 const lengthCheck = password => userPasswordLengthValid.test(password);
-const linkLinkedinCheck = link => userLinkedInValid.test(link);
-const linkGitCheck = link => userGitValid.test(link);
+const linkLinkedinCheck = link => link.match(userLinkedInValid);
+// userLinkedInValid.test(link);
+const linkGitCheck = link => link.match(userGitValid);
+// userGitValid.test(link);
 
 
 export const nameValidator = userName => userNameCheck(userName);

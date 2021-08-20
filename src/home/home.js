@@ -116,8 +116,8 @@ export const renderPosts = async () => {
     editBnt.onclick = () => editPost(post);
 
     content.innerHTML = post.content;
-    infoName.innerHTML = `${post.username},  `;
-    infoDate.innerHTML = moment(post.date).format('MMM Do YY');
+    infoName.innerHTML = `${user.username},  `;
+    infoDate.innerHTML = moment(post.date).format('lll');
 
     postsBlock.prepend(postPlace);
     functionalBlock.append(saveBtn, editBnt, deleteBnt);

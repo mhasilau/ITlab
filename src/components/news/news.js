@@ -36,8 +36,8 @@ export const renderPostsNews = async () => {
     (user.uuid !== LocalStorageClass.getUID()) ? postPlace.style.display = 'block' : postPlace.style.display = 'none';
 
     content.innerHTML = post.content;
-    infoName.innerHTML = `${post.username}, `;
-    infoDate.innerHTML = moment(post.date).format('MMM Do YY');
+    infoName.innerHTML = `${user.username}, `;
+    infoDate.innerHTML = moment(post.date).format('lll');
 
     postsBlock.prepend(postPlace);
     postPlace.append(content, infoName, infoDate);
