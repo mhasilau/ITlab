@@ -17,6 +17,7 @@ import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification, errorNotification } from '../shared/error-handlers';
 import { lists } from './countryList';
 import { ERROR_MESSAGE } from '../shared/messages/error-messages';
+import { CONSTANTS } from '../shared/constants/constants';
 import { nameValidator, linkLinkedinValidator, linkGitValidator } from '../shared/validators';
 
 export const postForm = () => {
@@ -175,11 +176,11 @@ export const changeUserData = () => {
 
     LocalStorageClass.setBirth(birthInp.value);
 
-    if (birthYear < todayYear ) {
+    if (birthYear < todayYear && birthYear > CONSTANTS.minYear) {
       helpMessageBirth.style.display = 'none';
-    } else if (birthYear == todayYear && birthMonth < todayMonth) {
+    } else if (birthYear == todayYear && birthYear > CONSTANTS.minYear && birthMonth < todayMonth) {
       helpMessageBirth.style.display = 'none';
-    } else if (birthYear == todayYear && birthMonth == todayMonth && birthDay <= todayDay) {
+    } else if (birthYear == todayYear && birthYear > CONSTANTS.minYear && birthMonth == todayMonth && birthDay <= todayDay) {
       helpMessageBirth.style.display = 'none';
     } else helpMessageBirth.style.display = 'block';
   }
