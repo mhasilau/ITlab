@@ -6,3 +6,20 @@ export const INFO_MESSAGE = {
   passwordIn: 'Enter your password',
   emailIn: 'Use the email address you specified during registration'
 }
+
+export const userInfoNotification = (birth, linkedin, github) => {
+  const board = document.querySelector('.info-message')
+  const birthOut = document.querySelector('.show-info-birth')
+  const linkedinOut = document.querySelector('.show-info-linkedin')
+  const githubOut = document.querySelector('.show-info-github')
+  const block = () => board.style.display = 'none';
+  board.style.display = 'block';
+  birthOut.innerText = birth;
+  linkedinOut.innerText = linkedin
+  birthOut.href = `${linkedin}`;
+  console.log(birthOut.href);
+  githubOut.innerText = github
+  birthOut.href = `${github}`;
+
+  setTimeout(block, 5000)
+}
