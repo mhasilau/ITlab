@@ -4,6 +4,8 @@ import {
   userPasswordLengthValid,
   userPasswordLowerCaseValid,
   userPasswordNumbersValid,
+  userLinkedInValid,
+  userGitValid
 } from './constants/regexp';
 
 const userPassword = document.getElementById('password');
@@ -13,8 +15,16 @@ const userEmailCheck = userEmail => userEmailValid.test(userEmail);
 const lowerCaseCheck = password => userPasswordLowerCaseValid.test(password);
 const numberCheck = password => userPasswordNumbersValid.test(password);
 const lengthCheck = password => userPasswordLengthValid.test(password);
+const linkLinkedinCheck = link => link.match(userLinkedInValid);
+// userLinkedInValid.test(link);
+const linkGitCheck = link => link.match(userGitValid);
+// userGitValid.test(link);
+
 
 export const nameValidator = userName => userNameCheck(userName);
+export const linkLinkedinValidator = link => linkLinkedinCheck(link);
+export const linkGitValidator = link => linkGitCheck(link);
+
 
 export const emailValidator = email => userEmailCheck(email);
 
