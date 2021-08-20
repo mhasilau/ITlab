@@ -14,8 +14,10 @@ import {
 } from '../api/api-handlers';
 import { routes } from '../shared/constants/routes';
 import { databaseURL, noAvatarURL } from '../api/api-config';
-import { showErrorNotification } from '../shared/error-handlers';
+import { showErrorNotification, errorNotification } from '../shared/error-handlers';
 import { lists } from './countryList';
+import { ERROR_MESSAGE } from '../shared/messages/error-messages';
+import { nameValidator, linkLinkedinValidator, linkGitValidator } from '../shared/validators';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -64,7 +66,7 @@ export const renderPosts = async () => {
     const deleteBnt = document.createElement('button');
     const saveBtn = document.createElement('button');
     const postPlace = document.createElement('div');
-    const content = document.createElement('p');
+    const content = document.createElement('textarea');
     const editContent = document.createElement('textarea');
     const infoName = document.createElement('span');
     const infoDate = document.createElement('span');
@@ -75,6 +77,7 @@ export const renderPosts = async () => {
     saveBtn.className = 'save';
     postPlace.className = 'render-posts-post';
     content.className = 'render-posts-content';
+    content.readOnly = true;
     infoName.className = 'render-posts-info';
     infoDate.className = 'render-posts-info';
     editContent.style.display = 'none';
@@ -114,8 +117,8 @@ export const renderPosts = async () => {
     editBnt.onclick = () => editPost(post);
 
     content.innerHTML = post.content;
-    infoName.innerHTML = `${post.username},  `;
-    infoDate.innerHTML = moment(post.date).format('MMM Do YY');
+    infoName.innerHTML = `${user.username},  `;
+    infoDate.innerHTML = moment(post.date).format('lll');
 
     postsBlock.prepend(postPlace);
     functionalBlock.append(saveBtn, editBnt, deleteBnt);
@@ -128,6 +131,7 @@ export const changeUserData = () => {
 
   const change_info = document.getElementById('change-info');
   const save_info = document.getElementById('save-info');
+  const discard_info = document.getElementById('discard-info');
   const usernameInp = document.getElementById('username');
   const countryInp = document.getElementById('country');
   const birthInp = document.getElementById('birth');
@@ -136,64 +140,119 @@ export const changeUserData = () => {
   const avatar = document.getElementById('file');
   const deleteAvatar = document.getElementById('delAvatar');
   const userInfoBlock = document.querySelector('.user-info');
+  const helpMessageUser = document.getElementById('usernameError');
+  const helpMessageBirth = document.getElementById('birthError');
+  const helpMessageLinkedin = document.getElementById('linkedinError');
+  const helpMessageGithub = document.getElementById('githubError');
+
+  helpMessageUser.style.display = 'none';
+  helpMessageBirth.style.display = 'none';
+  helpMessageLinkedin.style.display = 'none';
+  helpMessageGithub.style.display = 'none';
+  discard_info.style.display = 'none';
+  save_info.style.display = 'none';
+
+  helpMessageUser.innerText = `${ERROR_MESSAGE.helpMessageUser}`;
+  helpMessageBirth.innerText = `${ERROR_MESSAGE.helpMessageBirth}`;
+  helpMessageLinkedin.innerText = `${ERROR_MESSAGE.helpMessageLink}`;
+  helpMessageGithub.innerText = `${ERROR_MESSAGE.helpMessageLink}`;
+
+  console.log();
 
   usernameInp.oninput = () => {
     LocalStorageClass.setUsername(usernameInp.value);
+    nameValidator(usernameInp.value) ? helpMessageUser.style.display = 'none' : helpMessageUser.style.display = 'block';
   }
 
   birthInp.oninput = () => {
+    const year = moment().format();
+    const birthYear = Number(birthInp.value.split('-')[0]);
+    const birthMonth = Number(birthInp.value.split('-')[1]);
+    const birthDay = Number(birthInp.value.split('-')[2]);
+    const todayYear = Number(year.split('-')[0]);
+    const todayMonth = Number(year.split('-')[1]);
+    const todayDay = Number(Date().split(' ')[2]);
+
     LocalStorageClass.setBirth(birthInp.value);
+
+    if (birthYear < todayYear ) {
+      helpMessageBirth.style.display = 'none';
+    } else if (birthYear == todayYear && birthMonth < todayMonth) {
+      helpMessageBirth.style.display = 'none';
+    } else if (birthYear == todayYear && birthMonth == todayMonth && birthDay <= todayDay) {
+      helpMessageBirth.style.display = 'none';
+    } else helpMessageBirth.style.display = 'block';
   }
 
   linkedinInp.oninput = () => {
     LocalStorageClass.setLinkedIn(linkedinInp.value);
+    linkLinkedinValidator(linkedinInp.value) ?
+      helpMessageLinkedin.style.display = 'none' :
+      helpMessageLinkedin.style.display = 'block';
   }
 
   githubInp.oninput = () => {
     LocalStorageClass.setGithub(githubInp.value);
+    linkGitValidator(githubInp.value) ?
+      helpMessageGithub.style.display = 'none' :
+      helpMessageGithub.style.display = 'block';
   }
 
-  usernameInp.value = LocalStorageClass.getUsername();
+  usernameInp.value = LocalStorageClass.getUserData().username;
   countryInp.value = country;
-  birthInp.value = LocalStorageClass.getBirth();
-  linkedinInp.value = LocalStorageClass.getLinkedIn();
-  githubInp.value = LocalStorageClass.getGithub();
+  birthInp.value = LocalStorageClass.getUserData().birth;
+  linkedinInp.value = LocalStorageClass.getUserData().linkedin;
+  githubInp.value = LocalStorageClass.getUserData().github;
 
-
-  save_info.style.display = 'none';
-
-  if (LocalStorageClass.getUserData().ava != noAvatarURL) {
-    deleteAvatar.style.display = 'block';
-  } else deleteAvatar.style.display = 'none';
+  LocalStorageClass.getUserData().ava != noAvatarURL ?
+    deleteAvatar.style.display = 'block' :
+    deleteAvatar.style.display = 'none';
 
   change_info.onclick = () => {
     save_info.style.display = 'block';
     change_info.style.display = 'none';
+    discard_info.style.display = 'block';
     userInfoBlock.style.display = 'block';
 
     lists();
   }
 
   save_info.onclick = async () => {
-    const userUpd = {
-      username: usernameInp.value,
-      country: countryInp.value,
-      birth: birthInp.value,
-      linkedin: linkedinInp.value,
-      github: githubInp.value,
-      id: id,
-      uuid: uuid,
-      ava: ava
-    }
-    await saveInfo(userUpd)
-      .then( () => {
-        save_info.style.display = 'none';
-        change_info.style.display = 'block';
-        userInfoBlock.style.display = 'none';
-      });
-    await deleteUserDataLS();
+    if (
+      helpMessageUser.style.display == 'none' &&
+      helpMessageBirth.style.display == 'none' &&
+      helpMessageLinkedin.style.display == 'none' &&
+      helpMessageGithub.style.display == 'none'
+    ) {
+      const userUpd = {
+        username: usernameInp.value,
+        country: countryInp.value,
+        birth: birthInp.value,
+        linkedin: linkedinInp.value,
+        github: githubInp.value,
+        id: id,
+        uuid: uuid,
+        ava: ava
+      }
+      await saveInfo(userUpd)
+        .then( () => {
+          save_info.style.display = 'none';
+          change_info.style.display = 'block';
+          userInfoBlock.style.display = 'none';
+          discard_info.style.display = 'none';
+        });
+      await deleteUserDataLS();
+      renderPosts();
+    } else errorNotification(ERROR_MESSAGE.errorValidChangeData);
   }
-  
+
+  discard_info.onclick = () => {
+    deleteUserDataLS();
+    save_info.style.display = 'none';
+    discard_info.style.display = 'none';
+    change_info.style.display = 'block';
+    userInfoBlock.style.display = 'none';
+  }
 
   avatar.oninput = async event => {
       const avaName = document.getElementById('file').value;
