@@ -199,11 +199,10 @@ export const changeUserData = () => {
       helpMessageGithub.style.display = 'block';
   }
 
-  usernameInp.value = LocalStorageClass.getUserData().username;
-  countryInp.value = country;
-  birthInp.value = LocalStorageClass.getUserData().birth;
-  linkedinInp.value = LocalStorageClass.getUserData().linkedin;
-  githubInp.value = LocalStorageClass.getUserData().github;
+  LocalStorageClass.getUsername() ? usernameInp.value = LocalStorageClass.getUsername() : usernameInp.value = LocalStorageClass.getUserData().username;
+  LocalStorageClass.getBirth() ? birthInp.value = LocalStorageClass.getBirth() : birthInp.value = LocalStorageClass.getUserData().birth;
+  LocalStorageClass.getLinkedIn() ? linkedinInp.value = LocalStorageClass.getLinkedIn() : linkedinInp.value = LocalStorageClass.getUserData().linkedin;
+  LocalStorageClass.getGithub() ? githubInp.value = LocalStorageClass.getGithub() : githubInp.value = LocalStorageClass.getUserData().github;
 
   LocalStorageClass.getUserData().ava != noAvatarURL ?
     deleteAvatar.style.display = 'block' :
