@@ -4,6 +4,7 @@ import { logout } from '../../home/home';
 import { webPageLinks } from '../../shared/constants/location';
 import { getPosts, getUsers } from '../../api/api-handlers';
 import { LocalStorageClass } from '../../shared/local-storage/ls-config';
+import { userInfoNotification } from '../../shared/messages/info-message';
 
 export const newsHandler = () => {
   webPageLinks();
@@ -41,5 +42,9 @@ export const renderPostsNews = async () => {
 
     postsBlock.prepend(postPlace);
     postPlace.append(content, infoName, infoDate);
+
+    infoName.onmouseenter = () => {
+      userInfoNotification(user.birth, user.linkedin, user.github);
+    }
   });
 }
