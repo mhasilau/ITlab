@@ -8,7 +8,7 @@ export const showErrorNotification = error => {
 }
 
 export const errorNotification = error => {
-  const board = document.querySelector('.info-message')
+  const board = document.querySelector('.info-message-user-main')
   const message = document.querySelector('.show-info-message')
   const block = () => board.style.display = 'none';
   board.style.display = 'block';

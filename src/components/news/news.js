@@ -32,6 +32,7 @@ export const renderPostsNews = async () => {
     postPlace.className = 'render-posts-post';
     content.className = 'render-posts-content';
     infoName.className = 'render-posts-info';
+    infoName.id = 'pointer';
     infoDate.className = 'render-posts-info';
 
     (user.uuid !== LocalStorageClass.getUID()) ? postPlace.style.display = 'block' : postPlace.style.display = 'none';
@@ -43,7 +44,7 @@ export const renderPostsNews = async () => {
     postsBlock.prepend(postPlace);
     postPlace.append(content, infoName, infoDate);
 
-    infoName.onmouseenter = () => {
+    infoName.onclick = () => {
       userInfoNotification(user.birth, user.linkedin, user.github);
     }
   });

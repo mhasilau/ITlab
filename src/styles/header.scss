@@ -1,3 +1,5 @@
+@import './colors.scss';
+
 .main-header {
   display: flex;
   flex-direction: row;
@@ -6,15 +8,15 @@
   height: 50px;
   padding: 40px;
   font-size: 15px;
-  background-color: #fff;
+  background-color: $mainBack;
   
 
   &-img, &-input, &-button {
-    background-color: #fff;
+    background-color: $mainBack;
   }
 
   img, input, button {
-    background-color: #fff;
+    background-color: $mainBack;
     margin-left: 20px;
     padding-left: 10px;
   }
@@ -24,16 +26,15 @@
     height:30px;
     border: 0;
     border-radius: 20px;
-    background-color: #cdcdc0;
+    background-color: $mainBack;
   }
 
   button {
     position: absolute;
     right: 0;
     border: 0px;
-    color: #973c15;
+    color: $Btns;
   }
-
 }
 
 .header {
@@ -46,7 +47,7 @@
   font-size: 15px;
 
   a {
-    color: #fff;
+    color: $Btns;
     text-decoration: none;
   }
 }

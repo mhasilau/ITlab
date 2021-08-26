@@ -24,16 +24,14 @@ export const signInHandler = () => {
   const signInForm = document.querySelector('.main_content_form');
   const signInEmailInput = document.getElementById('email');
   const signInPasswordInput = document.getElementById('password');
-  const signInBtn = document.getElementById('submitBtn');
   const loader = document.querySelector('.cssload-loading');
-  
+
   loader.style.display = 'none';
   helpMessageEmail.style.display = 'none';
   helpMessagePassword.style.display = 'none';
 
   helpMessageEmail.innerText = 'Incorrect e-mail. Click help';
   helpMessagePassword.innerText = 'Please, enter correct password.';
-
 
   signInEmailInput.oninput = () => {
     if (emailValidator(signInEmailInput.value)) {
@@ -53,7 +51,6 @@ export const signInHandler = () => {
       if (response) {
         const { idToken: token } = response.data;
         LocalStorageClass.setToken(token);
-        // There is will be message 'Hello, username'
         setTimeout( () =>  window.location.href = routes.home, 3000);
       }
     });

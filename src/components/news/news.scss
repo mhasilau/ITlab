@@ -1,0 +1,20 @@
+@import '../../styles/colors.scss';
+
+.info-message-user {
+  height: auto;
+  width: 200px;
+  border: 2px solid $border;
+  border-radius: 20px;
+  position: absolute;
+  padding: 10px;
+  display: none;
+
+  p {
+    font-size: 12px;
+    color: $black;
+  }
+
+  &:hover .info-message {
+    display: block;
+  }
+}

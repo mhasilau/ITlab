@@ -9,13 +9,14 @@
 @import './render.scss';
 @import './awaiting.scss';
 @import './responsive/responsive.scss';
+@import './colors.scss';
 
 * {
   margin: 0;
-  background-color: #cdcdc0;
+  background-color: $mainBack;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 100%;
-  color: #973c15;
+  color: $backColor;
 
   input, textarea {
     outline: none;

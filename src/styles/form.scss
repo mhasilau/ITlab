@@ -1,3 +1,5 @@
+@import './colors.scss';
+
 .main_content {
   display: flex;
   flex-direction: column;
@@ -5,44 +7,66 @@
 
   p {
     font-size: 30px;
-    color: #fff;
+    color: $border;
   }
 
   .error-message {
     height: 15px;
-    
+
     p {
       font-size: 12px;
-      color: black;
+      color: $black;
     }
   }
 
+  .info-message {
+    height: auto;
+    width: 200px;
+    border: 2px solid $border;
+    border-radius: 20px;
+    position: absolute;
+    padding: 10px;
+    display: none;
+
+    p {
+      font-size: 12px;
+      color: $black;
+    }
+
+    &:hover .info-message {
+      display: block;
+    }
+  }
+  
   &_form {
     width: 50%;
-    border: 2px solid #fff;
+    border: 2px solid $border;
     border-radius: 20px;
     padding: 40px 40px;
     align-items: center;
+
 
     .mb-3 {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-
+      
       .input {
+        border: 1px solid $border;
+        border-radius: 25px;
         width: 100%;
 
         .red {
-          border: 3px solid red;
+          border: 3px solid $lessPass;
         }
 
         .yellow {
-          border: 3px solid yellow;
+          border: 3px solid $middlePass;
         }
 
         .green {
-          border: 3px solid green;
+          border: 3px solid $strongPass;
         }
 
       }
@@ -70,25 +94,32 @@
       font-size: 40px;
       margin-bottom: 10px;
       #colorStart {
-        color: #494949;
+        color: $logoColor;
       }
 
       #colorEnd {
-        color: #973c15;
+        color: $logo2Color;
       }
     }
   }
 }
 
-.info-message {
+.info-message-user {
   height: auto;
-  width: 200px;
-  border: 2px solid #973c15;
+  width: auto;
+  border: 2px solid $border;
   border-radius: 20px;
-  position: absolute;
-  top: 35%;
+  position: fixed;
   padding: 10px;
-  left: 75%;
-  font-size: 12px;
   display: none;
+  top: 25%;
+
+  p, a {
+    font-size: 10px;
+    color: $black;
+  }
+
+  &:hover .info-message {
+    display: block;
+  }
 }

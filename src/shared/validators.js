@@ -2,7 +2,7 @@ import {
   userNameValid,
   userEmailValid,
   userPasswordLengthValid,
-  userPasswordLowerCaseValid,
+  userPasswordCaseValid,
   userPasswordNumbersValid,
   userLinkedInValid,
   userGitValid
@@ -12,13 +12,11 @@ const userPassword = document.getElementById('password');
 
 const userNameCheck = userName => userNameValid.test(userName);
 const userEmailCheck = userEmail => userEmailValid.test(userEmail);
-const lowerCaseCheck = password => userPasswordLowerCaseValid.test(password);
+const lowerCaseCheck = password => userPasswordCaseValid.test(password);
 const numberCheck = password => userPasswordNumbersValid.test(password);
 const lengthCheck = password => userPasswordLengthValid.test(password);
 const linkLinkedinCheck = link => link.match(userLinkedInValid);
-// userLinkedInValid.test(link);
 const linkGitCheck = link => link.match(userGitValid);
-// userGitValid.test(link);
 
 
 export const nameValidator = userName => userNameCheck(userName);

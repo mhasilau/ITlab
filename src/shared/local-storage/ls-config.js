@@ -43,6 +43,14 @@ export class LocalStorageClass {
     localStorage.setItem('username', username);
   }
 
+  static getCountry() {
+    return localStorage.getItem('country');
+  }
+
+  static setCountry(country) {
+    localStorage.setItem('country', country);
+  }
+
   static getBirth() {
     return localStorage.getItem('birth');
   }

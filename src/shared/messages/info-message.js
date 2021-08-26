@@ -8,11 +8,10 @@ export const INFO_MESSAGE = {
 }
 
 export const userInfoNotification = (birth, linkedin, github) => {
-  const board = document.querySelector('.info-message')
-  const birthOut = document.querySelector('.show-info-birth')
-  const linkedinOut = document.querySelector('.show-info-linkedin')
-  const githubOut = document.querySelector('.show-info-github')
-  const block = () => board.style.display = 'none';
+  const board = document.querySelector('.info-message-user');
+  const birthOut = document.querySelector('.show-info-birth');
+  const linkedinOut = document.querySelector('.show-info-linkedin');
+  const githubOut = document.querySelector('.show-info-github');
   board.style.display = 'block';
   birthOut.innerText = birth;
   linkedinOut.innerText = linkedin
@@ -21,5 +20,5 @@ export const userInfoNotification = (birth, linkedin, github) => {
   githubOut.innerText = github
   birthOut.href = `${github}`;
 
-  setTimeout(block, 5000)
+  setTimeout(() => board.style.display = 'none', 5000)
 }

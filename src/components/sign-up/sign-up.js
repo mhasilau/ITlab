@@ -15,8 +15,6 @@ const helpMessageEmail = document.getElementById('emailError');
 const helpMessagePassword = document.getElementById('passwordError');
 const helpMessageConfirmPassword = document.getElementById('passwordConfirmError');
 
-
-
 const inputForm = {
   userName: {
     isValid: false
@@ -95,6 +93,7 @@ export const signUpHandler = () => {
 
   userPassword.oninput = () => {
     if (password.value) {
+      console.log(password.value);
       inputForm.password.isValid = passwordPower(password.value);
       helpMessagePassword.style.display = 'none';
     } else {
