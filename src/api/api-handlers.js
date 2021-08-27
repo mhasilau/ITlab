@@ -209,7 +209,7 @@ export const saveInfo = async (user) => {
   await axios.put(`${databaseURL}/users/${user.id}.json`, user)
   .then(() => LocalStorageClass.setUserData(user))
   .catch( error => showErrorNotification(error));
-  updAvatar();
+  await updAvatar();
 }
 
 export const deleteUserDataLS = () => {

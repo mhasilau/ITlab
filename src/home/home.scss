@@ -6,6 +6,11 @@
   justify-content: center;
   padding: 10px;
 
+  .routestANDinfo {
+    display: flex;
+    flex-direction: row;
+  }
+
   &-menu {
     width: 15vw;
     padding: 10px;

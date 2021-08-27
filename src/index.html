@@ -14,39 +14,45 @@
           <img src="./assets/pictures/logo.png" alt="">
         </div>
         <div class="main-header-input">
-          <input type="search" placeholder="search">
+          <input type="search" placeholder="Search">
         </div>
         <div class="main-header-button">
-          <button id="logout-btn">logout</button>
+          <button id="logout-btn">Logout</button>
         </div>
       </div>
       <div class="main-content">
-        <div class="main-content-menu">
-          <div><button id="my-page">My page</button></div>
-          <div><button id="news">News</button></div>
-          <div><button id="friends">Friends</button></div>
-          <div><button id="photos">Photos</button></div>
-          <div><button id="music">Music</button></div>
-          <div><button id="videos">Videos</button></div>
+        <div class="routestANDinfo">
+          <div class="main-content-menu">
+            <div><button id="my-page">My page</button></div>
+            <div><button id="news">News</button></div>
+            <!-- <div><button id="friends">Friends</button></div>
+            <div><button id="photos">Photos</button></div>
+            <div><button id="music">Music</button></div>
+            <div><button id="videos">Videos</button></div> -->
+          </div>
+          
+          <div class="main-content-user">
+            <div class="main-content-user-photo">
+              <img src="./assets/ico/delete.svg" alt="" id="delAvatar">
+            </div>
+            <div class="main-content-user-change-photo">
+              <input type="button" id="change-avatar" value="Change avatar" onclick="document.getElementById('file').click();" />
+              <input type="file" style="display:none;" id="file" name="file" accept=".png, .jpg, .jpeg, .gif, .svg"/>
+            </div>
+            <div class="main-content-user-change-info">
+              <button id="change-info">Change info</button>
+              <button id="save-info">Save info</button>
+              <button id="discard-info">Discard info</button>
+            </div>
+            <div class="main-content-user-info-block"></div>
+          </div>
+
         </div>
+
         <div class="info-message-user-main">
           <p class="show-info-message"></p>
         </div>
-        <div class="main-content-user">
-          <div class="main-content-user-photo">
-            <img src="./assets/ico/delete.svg" alt="" id="delAvatar">
-          </div>
-          <div class="main-content-user-change-photo">
-            <input type="button" id="change-avatar" value="Change avatar" onclick="document.getElementById('file').click();" />
-            <input type="file" style="display:none;" id="file" name="file" accept=".png, .jpg, .jpeg, .gif, .svg"/>
-          </div>
-          <div class="main-content-user-change-info">
-            <button id="change-info">Change info</button>
-            <button id="save-info">Save info</button>
-            <button id="discard-info">Discard info</button>
-          </div>
-          <div class="main-content-user-info-block"></div>
-        </div>
+
         <div class="main-content-posts">
           <div class="user-info">
             <div class="user-info-input">
@@ -87,9 +93,9 @@
               <textarea id="post-content" maxlength="300" wrap="soft"></textarea>
             </div>
             <div class="media-buttons">
-              <div><img src="./assets/ico/images.svg" alt=""></div>
+              <!-- <div><img src="./assets/ico/images.svg" alt=""></div>
               <div><img src="./assets/ico/music-note-beamed.svg" alt=""></div>
-              <div><img src="./assets/ico/camera-video.svg" alt=""></div>
+              <div><img src="./assets/ico/camera-video.svg" alt=""></div> -->
               <div><button id="send-post"><img src="./assets/ico/pen.svg" alt="Send post"></button></div>
             </div>
           </form>

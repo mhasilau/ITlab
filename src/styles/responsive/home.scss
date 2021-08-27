@@ -5,6 +5,7 @@
     height: 150px;
     font-size: 15px;
     background-color: #fff;
+    text-align: center;
 
     input {
       width: 90%;
@@ -16,7 +17,10 @@
   }
 
   .main-content {
+    flex-direction: column;
+
     &-posts {
+      width: 100%;
       .user-info {
         width: 95%;
         margin: 10px;
@@ -84,6 +88,7 @@
 
 @media only screen and (max-width: 480px) {
   .main-header {
+    text-align: center;
     display: block;
     padding: 0;
     height: 150px;
