@@ -1,5 +1,7 @@
+@import './colors.scss';
+
 .main_content {
-  background-color: #cdcdc0;
+  background-color: $mainBack;
 }
 
 .form-control {
@@ -7,12 +9,3 @@
   border-radius: 20px;
 }
 
-#submitBtnUp, #subminBtnIn {
-  background-color: #973c15;
-  border-color: #973c15;
-
-  :hover {
-    background-color: #973c15;
-    border-color: #973c15;
-  }
-}

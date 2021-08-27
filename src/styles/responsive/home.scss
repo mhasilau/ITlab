@@ -1,0 +1,267 @@
+@media only screen and (max-width: 666px) {
+  .main-header {
+    display: block;
+    padding: 0;
+    height: 150px;
+    font-size: 15px;
+    background-color: #fff;
+
+    input {
+      width: 90%;
+    }
+
+    button {
+      position: relative;
+    }
+  }
+
+  .main-content {
+    &-posts {
+      .user-info {
+        width: 95%;
+        margin: 10px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        display: none;
+
+        &-input {
+          padding: 10px;
+          padding: 10px;
+          display: flex;
+          flex-direction: row;
+
+          .forWat {
+            width: 40%;
+            margin-top: auto;
+
+            span {
+              color: #fff;
+              font-size: 14px;
+
+            }
+          }
+
+          .watC {
+            width: 100%;
+
+            select {
+              padding: 5px;
+              width: 100%;
+              background-color: #fff;
+              border-radius: 50px;
+              height: 26px;
+              font-size: 12px;
+            }
+          }
+
+          &-group {
+            width: 100%;
+
+            .wat {
+              width: 100%;
+
+              input {
+                padding: 5px;
+                width: 100%;
+                background-color: #fff;
+                border-radius: 50px;
+                height: 26px;
+                font-size: 12px;
+              }
+            }
+
+            .error-message {
+              height: 12px;
+              font-size: 10px;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .main-header {
+    display: block;
+    padding: 0;
+    height: 150px;
+    font-size: 12px;
+    background-color: #fff;
+
+    input {
+      width: 90%;
+    }
+
+    button {
+      position: relative;
+    }
+  }
+
+  .main-content {
+    &-menu {
+      font-size: 10px;
+    }
+
+    &-user {
+      font-size: 12px;
+
+      &-photo {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    &-posts {
+      .user-info {
+        width: 90%;
+        margin: 10px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        display: none;
+
+        &-input {
+          padding: 5px;
+          display: flex;
+          flex-direction: row;
+
+          .forWat {
+            width: 40%;
+            margin-top: auto;
+
+            span {
+              color: #fff;
+              font-size: 8px;
+            }
+          }
+
+          .watC {
+            width: 100%;
+
+            select {
+              padding: 5px;
+              width: 100%;
+              background-color: #fff;
+              border-radius: 50px;
+              height: 22px;
+              font-size: 8px;
+            }
+          }
+
+          &-group {
+            width: 100%;
+
+            .wat {
+              width: 100%;
+
+              input {
+                padding: 5px;
+                width: 100%;
+                background-color: #fff;
+                border-radius: 50px;
+                height: 22px;
+                font-size: 8px;
+              }
+            }
+
+            .error-message {
+              height: 12px;
+              font-size: 10px;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .main-content {
+    &-posts {
+      .user-info {
+        width: 85%;
+        margin: 5px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        display: none;
+        padding: 0;
+
+        &-input {
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .forWat {
+            width: 40%;
+            margin-top: auto;
+
+            span {
+              color: #fff;
+              font-size: 8px;
+            }
+          }
+
+          .watC {
+            width: 100%;
+
+            select {
+              padding: 0;
+              width: 100%;
+              background-color: #fff;
+              border-radius: 50px;
+              height: 22px;
+              font-size: 8px;
+            }
+          }
+
+          &-group {
+            width: 100%;
+
+            .wat {
+              width: 100%;
+
+              input {
+                padding: 0;
+                width: 100%;
+                background-color: #fff;
+                border-radius: 50px;
+                height: 22px;
+                font-size: 8px;
+              }
+            }
+
+            .error-message {
+              height: 8px;
+              font-size: 6px;
+              margin: 0;
+            }
+          }
+        }
+      }
+
+      .media-buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+
+        img, button {
+          margin-right: 15px;
+          border: none;
+          width: 15px;
+        }
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+        resize: none;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+    }
+  }
+}
