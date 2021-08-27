@@ -204,9 +204,9 @@ export const changeUserData = () => {
   LocalStorageClass.getLinkedIn() ? linkedinInp.value = LocalStorageClass.getLinkedIn() : linkedinInp.value = LocalStorageClass.getUserData().linkedin;
   LocalStorageClass.getGithub() ? githubInp.value = LocalStorageClass.getGithub() : githubInp.value = LocalStorageClass.getUserData().github;
 
-  LocalStorageClass.getUserData().ava != noAvatarURL ?
-    deleteAvatar.style.display = 'block' :
-    deleteAvatar.style.display = 'none';
+  // LocalStorageClass.getUserData().ava != noAvatarURL ?
+    // deleteAvatar.style.display = 'block' :
+    // deleteAvatar.style.display = 'none';
 
   change_info.onclick = () => {
     save_info.style.display = 'block';
