@@ -6,6 +6,10 @@
   justify-content: center;
   padding: 10px;
 
+  .btn-primary {
+    width: 100%;
+  }
+
   .routestANDinfo {
     display: flex;
     flex-direction: row;
@@ -23,6 +27,8 @@
 
   &-user {
     padding: 10px;
+    border: 1px solid $border;
+    border-radius: 5px;
 
     button {
       border: none;
