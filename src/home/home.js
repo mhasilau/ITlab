@@ -1,7 +1,7 @@
 import moment from 'moment';
 import axios from 'axios';
 
-import { LocalStorageClass } from '../shared/local-storage/ls-config';
+import { LocalStorageClass, userData } from '../shared/local-storage/ls-config';
 import { 
   createPost,
   getPosts,
@@ -17,8 +17,7 @@ import { databaseURL, noAvatarURL } from '../api/api-config';
 import { showErrorNotification, errorNotification } from '../shared/error-handlers';
 import { lists } from './countryList';
 import { ERROR_MESSAGE } from '../shared/messages/error-messages';
-import { CONSTANTS } from '../shared/constants/constants';
-import { nameValidator, linkLinkedinValidator, linkGitValidator } from '../shared/validators';
+import { ifNameIsValid, ifBDayIsValid, ifGitIsValid, ifLinkIsValid } from '../shared/validators';
 
 export const postForm = () => {
   const post_form = document.getElementById('post-form');
@@ -158,55 +157,27 @@ export const changeUserData = () => {
   helpMessageLinkedin.innerText = `${ERROR_MESSAGE.helpMessageLink}`;
   helpMessageGithub.innerText = `${ERROR_MESSAGE.helpMessageLink}`;
 
-  console.log();
-
   usernameInp.oninput = () => {
     LocalStorageClass.setUsername(usernameInp.value);
-    nameValidator(usernameInp.value) ? helpMessageUser.style.display = 'none' : helpMessageUser.style.display = 'block';
+    ifNameIsValid(usernameInp.value);
   }
 
   birthInp.oninput = () => {
-    const year = moment().format();
-    const birthYear = Number(birthInp.value.split('-')[0]);
-    const birthMonth = Number(birthInp.value.split('-')[1]);
-    const birthDay = Number(birthInp.value.split('-')[2]);
-    const todayYear = Number(year.split('-')[0]);
-    const todayMonth = Number(year.split('-')[1]);
-    const todayDay = Number(Date().split(' ')[2]);
-
     LocalStorageClass.setBirth(birthInp.value);
-
-    if (birthYear < todayYear && birthYear > CONSTANTS.minYear) {
-      helpMessageBirth.style.display = 'none';
-    } else if (birthYear == todayYear && birthYear > CONSTANTS.minYear && birthMonth < todayMonth) {
-      helpMessageBirth.style.display = 'none';
-    } else if (birthYear == todayYear && birthYear > CONSTANTS.minYear && birthMonth == todayMonth && birthDay <= todayDay) {
-      helpMessageBirth.style.display = 'none';
-    } else helpMessageBirth.style.display = 'block';
+    ifBDayIsValid(birthInp.value)
   }
 
   linkedinInp.oninput = () => {
     LocalStorageClass.setLinkedIn(linkedinInp.value);
-    linkLinkedinValidator(linkedinInp.value) ?
-      helpMessageLinkedin.style.display = 'none' :
-      helpMessageLinkedin.style.display = 'block';
+    ifLinkIsValid(linkedinInp.value)
   }
 
   githubInp.oninput = () => {
     LocalStorageClass.setGithub(githubInp.value);
-    linkGitValidator(githubInp.value) ?
-      helpMessageGithub.style.display = 'none' :
-      helpMessageGithub.style.display = 'block';
+    ifGitIsValid(githubInp.value);
   }
 
-  LocalStorageClass.getUsername() ? usernameInp.value = LocalStorageClass.getUsername() : usernameInp.value = LocalStorageClass.getUserData().username;
-  LocalStorageClass.getBirth() ? birthInp.value = LocalStorageClass.getBirth() : birthInp.value = LocalStorageClass.getUserData().birth;
-  LocalStorageClass.getLinkedIn() ? linkedinInp.value = LocalStorageClass.getLinkedIn() : linkedinInp.value = LocalStorageClass.getUserData().linkedin;
-  LocalStorageClass.getGithub() ? githubInp.value = LocalStorageClass.getGithub() : githubInp.value = LocalStorageClass.getUserData().github;
-
-  // LocalStorageClass.getUserData().ava != noAvatarURL ?
-    // deleteAvatar.style.display = 'block' :
-    // deleteAvatar.style.display = 'none';
+  userData();
 
   change_info.onclick = () => {
     save_info.style.display = 'block';
@@ -215,6 +186,16 @@ export const changeUserData = () => {
     userInfoBlock.style.display = 'block';
 
     lists();
+
+    let name = LocalStorageClass.getUsername();
+    let bday = LocalStorageClass.getBirth();
+    let git = LocalStorageClass.getGithub();
+    let link = LocalStorageClass.getLinkedIn();
+
+    name ? ifNameIsValid(name) : null;
+    bday ? ifBDayIsValid(bday) : null;
+    git ? ifGitIsValid(git) : null;
+    link ? ifLinkIsValid(link) : null;
   }
 
   save_info.onclick = async () => {
@@ -252,6 +233,7 @@ export const changeUserData = () => {
     discard_info.style.display = 'none';
     change_info.style.display = 'block';
     userInfoBlock.style.display = 'none';
+    changeUserData();
   }
 
   avatar.oninput = async event => {

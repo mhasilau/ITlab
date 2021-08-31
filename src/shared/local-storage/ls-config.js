@@ -75,3 +75,15 @@ export class LocalStorageClass {
     localStorage.setItem('github', github);
   }
 }
+
+export const userData = () => {
+  const usernameInp = document.getElementById('username');
+  const birthInp = document.getElementById('birth');
+  const linkedinInp = document.getElementById('linkedin');
+  const githubInp = document.getElementById('github');
+
+  LocalStorageClass.getUsername() ? usernameInp.value = LocalStorageClass.getUsername() : usernameInp.value = LocalStorageClass.getUserData().username;
+  LocalStorageClass.getBirth() ? birthInp.value = LocalStorageClass.getBirth() : birthInp.value = LocalStorageClass.getUserData().birth;
+  LocalStorageClass.getLinkedIn() ? linkedinInp.value = LocalStorageClass.getLinkedIn() : linkedinInp.value = LocalStorageClass.getUserData().linkedin;
+  LocalStorageClass.getGithub() ? githubInp.value = LocalStorageClass.getGithub() : githubInp.value = LocalStorageClass.getUserData().github;
+}
