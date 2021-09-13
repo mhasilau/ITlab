@@ -7,18 +7,26 @@ export const INFO_MESSAGE = {
   emailIn: 'Use the email address you specified during registration'
 }
 
-export const userInfoNotification = (birth, linkedin, github) => {
+export const userInfoNotification = (birth, linkedin, github, ava, country) => {
   const board = document.querySelector('.info-message-user');
   const birthOut = document.querySelector('.show-info-birth');
+  const countryOut = document.querySelector('.show-info-country');
   const linkedinOut = document.querySelector('.show-info-linkedin');
   const githubOut = document.querySelector('.show-info-github');
+  const closeBtn = document.getElementById('close-info');
+  const otherAva = document.querySelector('.info-message-user-avatar');
+
+  closeBtn.style.cursor = 'pointer';
   board.style.display = 'block';
   birthOut.innerText = birth;
+  countryOut.innerText = country;
   linkedinOut.innerText = linkedin
-  birthOut.href = `${linkedin}`;
-  console.log(birthOut.href);
+  linkedinOut.href = `${linkedin}`;
   githubOut.innerText = github
-  birthOut.href = `${github}`;
+  githubOut.href = `${github}`;
+  otherAva.style.backgroundImage = `url(${ava})`
+  console.log(board);
 
-  setTimeout(() => board.style.display = 'none', 5000)
+  closeBtn.onclick = () => board.style.display = 'none'
+  // setTimeout(() => board.style.display = 'none', 5000)
 }

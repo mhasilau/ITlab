@@ -185,6 +185,10 @@ export const changeUserData = () => {
     discard_info.style.display = 'block';
     userInfoBlock.style.display = 'block';
 
+    LocalStorageClass.getUserData().ava != noAvatarURL ?
+      deleteAvatar.style.display = 'block' :
+      deleteAvatar.style.display = 'none'
+
     lists();
 
     let name = LocalStorageClass.getUsername();
@@ -213,7 +217,7 @@ export const changeUserData = () => {
         github: githubInp.value,
         id: id,
         uuid: uuid,
-        ava: ava
+        ava: LocalStorageClass.getUserData().ava
       }
       await saveInfo(userUpd)
         .then( () => {
@@ -223,6 +227,7 @@ export const changeUserData = () => {
           discard_info.style.display = 'none';
         });
       await deleteUserDataLS();
+      await updAvatar();
       renderPosts();
     } else errorNotification(ERROR_MESSAGE.errorValidChangeData);
   }

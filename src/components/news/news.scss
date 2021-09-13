@@ -2,19 +2,27 @@
 
 .info-message-user {
   height: auto;
-  width: 200px;
+  width: auto;
   border: 2px solid $border;
   border-radius: 20px;
-  position: absolute;
+  position: fixed;
   padding: 10px;
   display: none;
+
+  &-img {
+    height: 50px;
+    width: 50px;
+    // border: 1px solid black;
+    // border-radius: 50%;
+    // background-size: cover;
+    // background-position: center;
+    // background-repeat: no-repeat;
+  }
 
   p {
     font-size: 12px;
     color: $black;
   }
 
-  &:hover .info-message {
-    display: block;
-  }
+
 }

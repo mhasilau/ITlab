@@ -45,7 +45,7 @@ export const renderPostsNews = async () => {
     postPlace.append(content, infoName, infoDate);
 
     infoName.onclick = () => {
-      userInfoNotification(user.birth, user.linkedin, user.github);
+      userInfoNotification(user.birth, user.linkedin, user.github, user.ava, user.country);
     }
   });
 }
