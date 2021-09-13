@@ -25,8 +25,7 @@ export const userInfoNotification = (birth, linkedin, github, ava, country) => {
   githubOut.innerText = github
   githubOut.href = `${github}`;
   otherAva.style.backgroundImage = `url(${ava})`
-  console.log(board);
+  console.log(otherAva);
 
   closeBtn.onclick = () => board.style.display = 'none'
-  // setTimeout(() => board.style.display = 'none', 5000)
 }
